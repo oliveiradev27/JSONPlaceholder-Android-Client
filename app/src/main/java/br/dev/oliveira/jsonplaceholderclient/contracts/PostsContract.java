@@ -2,13 +2,23 @@ package br.dev.oliveira.jsonplaceholderclient.contracts;
 
 
 import android.content.Context;
+import android.content.Intent;
 
 import java.util.List;
 
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 
 public interface PostsContract {
-    public interface View {
+
+    interface Model {
+        void getPosts();
+        void post(Integer postId);
+        void add(Post post);
+        void del(Integer postId);
+        void upd(Post post);
+    }
+
+    interface View {
         void showDialog(int title, int message);
         void showProgressBar();
         void hideProgressBar();
@@ -17,7 +27,7 @@ public interface PostsContract {
         void add();
     }
 
-    public interface Presenter {
+    interface Presenter {
         void getPosts(List<Post> posts);
         void add();
     }

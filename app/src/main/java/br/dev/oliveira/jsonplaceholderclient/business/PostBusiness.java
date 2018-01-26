@@ -13,6 +13,7 @@ import java.util.List;
 
 import br.dev.oliveira.jsonplaceholderclient.R;
 import br.dev.oliveira.jsonplaceholderclient.constants.NetworkConstants;
+import br.dev.oliveira.jsonplaceholderclient.contracts.PostsContract;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnResponseRequestListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.utils.infra.NetworkUtils;
@@ -20,43 +21,14 @@ import br.dev.oliveira.jsonplaceholderclient.utils.network.HttpRequest;
 
 public class PostBusiness {
 
-    private Context mContext;
+    private PostsContract.Presenter mPresenter;
 
-    public PostBusiness(Context context) {
-        this.mContext = context;
+
+    public PostBusiness(PostsContract.Presenter presenter) {
+        this.mPresenter = presenter;
     }
 
     public void getPosts(final List<Post> posts) throws VolleyError {
-        if (NetworkUtils.hasInternet(mContext)) {
-            HttpRequest request = new HttpRequest(mContext);
 
-            OnResponseRequestListener listener = new OnResponseRequestListener() {
-                @Override
-                public void onSuccess(String result) {
-                    Type listType = new TypeToken<ArrayList<Post>>() {
-                    }.getType();
-                    List<Post> list = new Gson().fromJson(result, listType);
-                    posts.addAll(list);
-                }
-
-                @Override
-                public void onError(VolleyError error) {
-                    new AlertDialog.Builder(mContext)
-                            .setTitle(R.string.ocorreu_um_erro)
-                            .setMessage(R.string.erro_posts_get)
-                            .show();
-                }
-            };
-
-            request.doGet(
-                    NetworkConstants.ROOT + NetworkConstants.ENDPOINT.POSTS_GET,
-                    listener
-            );
-        } else {
-            new AlertDialog.Builder(mContext)
-                    .setTitle(R.string.ocorreu_um_erro)
-                    .setMessage(R.string.internet_indisponivel)
-                    .show();
-        }
     }
 }
