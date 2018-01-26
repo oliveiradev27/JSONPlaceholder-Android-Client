@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">JSON Placeholder Client</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="listagem_de_posts">Listagem de Posts</string>
+    <string name="nome_do_post">Nome do Post</string>
+    <string name="ocorreu_um_erro">Ocorreu um erro!</string>
+    <string name="erro_posts_get">Ocorreu um erro ao buscar as informações, verifique sua conexão e tente novamente.</string>
+    <string name="internet_indisponivel">É necessário estar conectado a internet!</string>
+</resources>
