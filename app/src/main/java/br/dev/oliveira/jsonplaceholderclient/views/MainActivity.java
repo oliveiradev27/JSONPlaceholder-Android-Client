@@ -1,38 +1,43 @@
 package br.dev.oliveira.jsonplaceholderclient.views;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.dev.oliveira.jsonplaceholderclient.R;
 import br.dev.oliveira.jsonplaceholderclient.adapters.PostsListAdapter;
+import br.dev.oliveira.jsonplaceholderclient.contracts.PostsContract;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnListClickInteractionListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.presenters.PostPresenter;
 import br.dev.oliveira.jsonplaceholderclient.receivers.ConnectivityChangeReceiver;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener,
+        PostsContract.View {
 
     private ViewHolder mViewHolder = new ViewHolder();
     private PostsListAdapter adapter;
-    private PostPresenter mPostPresenter;
+    private PostsContract.Presenter mPostPresenter;
     private List<Post> mPosts = new ArrayList<>();
 
 
@@ -60,6 +65,7 @@ public class MainActivity extends AppCompatActivity
                 new IntentFilter(
                         ConnectivityManager.CONNECTIVITY_ACTION));
 
+        this.mViewHolder.fab = findViewById(R.id.fab);
         // Capturando recycler view
         this.mViewHolder.mRecyclerPosts = findViewById(R.id.recycler_posts);
 
@@ -92,6 +98,8 @@ public class MainActivity extends AppCompatActivity
         adapter = new PostsListAdapter(this, this.mPosts, listener);
         this.mViewHolder.mRecyclerPosts.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        this.setListeners();
     }
 
     @Override
@@ -107,7 +115,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        this.mPostPresenter.getPosts(this.mPosts);
+        this.getPosts(this.mPosts);
     }
 
 
@@ -143,14 +151,6 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -158,7 +158,51 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void showDialog(int title, int message) {
+        new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .show();
+    }
+
+    @Override
+    public void showProgressBar() {
+
+    }
+
+    @Override
+    public void hideProgressBar() {
+
+    }
+
+    @Override
+    public void getPosts(List<Post> post) {
+        this.mPostPresenter.getPosts(this.mPosts);
+    }
+
+    @Override
+    public void add() {
+        Intent intent = new Intent(MainActivity.this, PostActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.fab) this.add();
+    }
+
+    private void setListeners () {
+        this.mViewHolder.fab.setOnClickListener(this);
+    }
+
     private static class ViewHolder {
         RecyclerView mRecyclerPosts;
+        FloatingActionButton fab;
     }
 }

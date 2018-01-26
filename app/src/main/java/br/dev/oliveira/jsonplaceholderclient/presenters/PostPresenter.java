@@ -13,22 +13,24 @@ import java.util.List;
 
 import br.dev.oliveira.jsonplaceholderclient.R;
 import br.dev.oliveira.jsonplaceholderclient.constants.NetworkConstants;
+import br.dev.oliveira.jsonplaceholderclient.contracts.PostsContract;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnResponseRequestListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.utils.infra.NetworkUtils;
 import br.dev.oliveira.jsonplaceholderclient.utils.network.HttpRequest;
 
-public class PostPresenter {
+public class PostPresenter implements PostsContract.Presenter {
 
-    private Context mContext;
+    private PostsContract.View mView;
 
-    public PostPresenter(Context context) {
-        this.mContext = context;
+    public PostPresenter(PostsContract.View view) {
+        this.mView = view;
     }
 
+    @Override
     public void getPosts(final List<Post> posts) {
-        if (NetworkUtils.hasInternet(mContext)) {
-            HttpRequest request = new HttpRequest(mContext);
+        if (NetworkUtils.hasInternet(mView.getContext())) {
+            HttpRequest request = new HttpRequest(mView.getContext());
 
             OnResponseRequestListener listener = new OnResponseRequestListener() {
                 @Override
@@ -41,10 +43,7 @@ public class PostPresenter {
 
                 @Override
                 public void onError(VolleyError error) {
-                    new AlertDialog.Builder(mContext)
-                            .setTitle(R.string.ocorreu_um_erro)
-                            .setMessage(R.string.erro_posts_get)
-                            .show();
+                    mView.showDialog(R.string.ocorreu_um_erro, R.string.erro_posts_get);
                 }
             };
 
@@ -53,11 +52,13 @@ public class PostPresenter {
                     listener
             );
         } else {
-            new AlertDialog.Builder(mContext)
-                    .setTitle(R.string.ocorreu_um_erro)
-                    .setMessage(R.string.internet_indisponivel)
-                    .show();
+            this.mView.showDialog(R.string.ocorreu_um_erro, R.string.internet_indisponivel);
         }
+    }
+
+    @Override
+    public void add() {
+        this.mView.add();
     }
 
 }
