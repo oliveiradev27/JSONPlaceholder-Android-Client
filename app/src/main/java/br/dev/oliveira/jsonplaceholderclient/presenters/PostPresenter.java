@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.dev.oliveira.jsonplaceholderclient.R;
+import br.dev.oliveira.jsonplaceholderclient.business.PostBusiness;
 import br.dev.oliveira.jsonplaceholderclient.constants.NetworkConstants;
 import br.dev.oliveira.jsonplaceholderclient.contracts.PostsContract;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnResponseRequestListener;
@@ -19,9 +20,11 @@ import br.dev.oliveira.jsonplaceholderclient.utils.network.HttpRequest;
 public class PostPresenter implements PostsContract.Presenter {
 
     private PostsContract.View mView;
+    private PostsContract.Model mModel;
 
     public PostPresenter(PostsContract.View view) {
         this.mView = view;
+        this.mModel = new PostBusiness(this);
     }
 
     @Override
@@ -42,6 +45,8 @@ public class PostPresenter implements PostsContract.Presenter {
                     mView.showDialog(R.string.ocorreu_um_erro, R.string.erro_posts_get);
                 }
             };
+
+            this.mModel.getPosts(listener);
 
         } else {
             this.mView.showDialog(R.string.ocorreu_um_erro, R.string.internet_indisponivel);

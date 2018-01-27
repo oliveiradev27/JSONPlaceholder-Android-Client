@@ -69,7 +69,7 @@ public class HttpRequest {
     public static void doGet(final String url, final OnResponseRequestListener listener) {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET,
-                url,
+                NetworkConstants.ROOT+ url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

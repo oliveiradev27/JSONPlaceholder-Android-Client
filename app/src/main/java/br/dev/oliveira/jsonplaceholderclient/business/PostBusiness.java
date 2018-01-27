@@ -23,6 +23,7 @@ public class PostBusiness implements PostsContract.Model {
     public void getPosts(OnResponseRequestListener listener) {
 
         HttpRequest.doGet(NetworkConstants.ENDPOINT.POSTS_GET, listener);
+
     }
 
     @Override

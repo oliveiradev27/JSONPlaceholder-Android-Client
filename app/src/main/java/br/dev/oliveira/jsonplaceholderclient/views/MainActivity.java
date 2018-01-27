@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
 
         this.setListeners();
+        this.getPosts(this.mPosts);
     }
 
     @Override
@@ -179,7 +180,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void getPosts(List<Post> post) {
-        this.mPostPresenter.getPosts(this.mPosts);
+        this.mPostPresenter.getPosts(post);
     }
 
     @Override
