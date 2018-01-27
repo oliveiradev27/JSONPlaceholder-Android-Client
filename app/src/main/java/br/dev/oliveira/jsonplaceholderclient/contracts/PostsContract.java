@@ -2,16 +2,16 @@ package br.dev.oliveira.jsonplaceholderclient.contracts;
 
 
 import android.content.Context;
-import android.content.Intent;
 
 import java.util.List;
 
+import br.dev.oliveira.jsonplaceholderclient.listeners.OnListClickInteractionListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 
 public interface PostsContract {
 
     interface Model {
-        void getPosts();
+        void getPosts(List<Post> posts, OnListClickInteractionListener listener);
         void post(Integer postId);
         void add(Post post);
         void del(Integer postId);

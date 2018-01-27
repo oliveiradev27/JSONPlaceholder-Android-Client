@@ -2,6 +2,7 @@ package br.dev.oliveira.jsonplaceholderclient.utils.network;
 
 import android.content.Context;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,21 +17,24 @@ import br.dev.oliveira.jsonplaceholderclient.listeners.OnResponseRequestListener
 
 public class HttpRequest {
 
+    private static HttpRequest mHttpRequest;
     private static RequestQueue mRequestQueue;
-    private Context mContext;
 
-    public HttpRequest(Context context) {
-        this.mContext = context;
+    private HttpRequest() {
+    }
+
+    public static void initialize(Context context) {
         if (mRequestQueue == null)
             mRequestQueue = Volley.newRequestQueue(context);
     }
 
-    public void doPost(
+
+    public static void doPost(
             final String url,
-            JSONObject body,
+            final JSONObject requestBody,
             final OnResponseRequestListener listener) {
         StringRequest stringRequest = new StringRequest(
-                Request.Method.GET,
+                Request.Method.POST,
                 url,
                 new Response.Listener<String>() {
                     @Override
@@ -42,12 +46,27 @@ public class HttpRequest {
             public void onErrorResponse(VolleyError error) {
                 listener.onError(error);
             }
-        });
+        }){
+            @Override
+            public String getBodyContentType() {
+                return NetworkConstants.CONTENT_TYPE;
+            }
+
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                final byte[] body = requestBody.toString().getBytes();
+                if (body != null) {
+                    return body;
+                }
+                return super.getBody();
+            }
+        };
 
         mRequestQueue.add(stringRequest);
     }
 
-    public void doGet(final String url, final OnResponseRequestListener listener) {
+    public static void doGet(final String url, final OnResponseRequestListener listener) {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET,
                 url,

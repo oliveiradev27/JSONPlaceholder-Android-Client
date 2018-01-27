@@ -14,12 +14,13 @@ import java.util.List;
 import br.dev.oliveira.jsonplaceholderclient.R;
 import br.dev.oliveira.jsonplaceholderclient.constants.NetworkConstants;
 import br.dev.oliveira.jsonplaceholderclient.contracts.PostsContract;
+import br.dev.oliveira.jsonplaceholderclient.listeners.OnListClickInteractionListener;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnResponseRequestListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.utils.infra.NetworkUtils;
 import br.dev.oliveira.jsonplaceholderclient.utils.network.HttpRequest;
 
-public class PostBusiness {
+public class PostBusiness implements PostsContract.Model {
 
     private PostsContract.Presenter mPresenter;
 
@@ -29,6 +30,30 @@ public class PostBusiness {
     }
 
     public void getPosts(final List<Post> posts) throws VolleyError {
+
+    }
+
+    @Override
+    public void getPosts(List<Post> posts, OnListClickInteractionListener listener) {
+    }
+
+    @Override
+    public void post(Integer postId) {
+
+    }
+
+    @Override
+    public void add(Post post) {
+
+    }
+
+    @Override
+    public void del(Integer postId) {
+
+    }
+
+    @Override
+    public void upd(Post post) {
 
     }
 }

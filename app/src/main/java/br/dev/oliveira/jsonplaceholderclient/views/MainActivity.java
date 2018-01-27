@@ -29,6 +29,7 @@ import br.dev.oliveira.jsonplaceholderclient.listeners.OnListClickInteractionLis
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.presenters.PostPresenter;
 import br.dev.oliveira.jsonplaceholderclient.receivers.ConnectivityChangeReceiver;
+import br.dev.oliveira.jsonplaceholderclient.utils.network.HttpRequest;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        HttpRequest.initialize(getApplicationContext());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

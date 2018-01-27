@@ -1,8 +1,5 @@
 package br.dev.oliveira.jsonplaceholderclient.presenters;
 
-import android.content.Context;
-import android.support.v7.app.AlertDialog;
-
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -30,7 +27,6 @@ public class PostPresenter implements PostsContract.Presenter {
     @Override
     public void getPosts(final List<Post> posts) {
         if (NetworkUtils.hasInternet(mView.getContext())) {
-            HttpRequest request = new HttpRequest(mView.getContext());
 
             OnResponseRequestListener listener = new OnResponseRequestListener() {
                 @Override
@@ -47,7 +43,7 @@ public class PostPresenter implements PostsContract.Presenter {
                 }
             };
 
-            request.doGet(
+            HttpRequest.doGet(
                     NetworkConstants.ROOT + NetworkConstants.ENDPOINT.POSTS_GET,
                     listener
             );
