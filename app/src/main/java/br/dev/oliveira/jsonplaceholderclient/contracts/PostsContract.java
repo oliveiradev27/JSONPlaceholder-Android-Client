@@ -22,16 +22,16 @@ public interface PostsContract {
     }
 
     interface View {
-        void showDialog(int title, int message);
+        void showMessageDialog(int title, int message);
         void showProgressBar();
         void hideProgressBar();
         void getPosts(List<Post> post);
         Context getContext();
-        void add();
+        void goToPagePost();
     }
 
     interface Presenter {
         void getPosts(List<Post> posts);
-        void add();
+        void goToPagePost();
     }
 }

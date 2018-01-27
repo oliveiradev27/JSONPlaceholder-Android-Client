@@ -10,12 +10,10 @@ import java.util.List;
 
 import br.dev.oliveira.jsonplaceholderclient.R;
 import br.dev.oliveira.jsonplaceholderclient.business.PostBusiness;
-import br.dev.oliveira.jsonplaceholderclient.constants.NetworkConstants;
 import br.dev.oliveira.jsonplaceholderclient.contracts.PostsContract;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnResponseRequestListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.utils.infra.NetworkUtils;
-import br.dev.oliveira.jsonplaceholderclient.utils.network.HttpRequest;
 
 public class PostPresenter implements PostsContract.Presenter {
 
@@ -42,20 +40,20 @@ public class PostPresenter implements PostsContract.Presenter {
 
                 @Override
                 public void onError(VolleyError error) {
-                    mView.showDialog(R.string.ocorreu_um_erro, R.string.erro_posts_get);
+                    mView.showMessageDialog(R.string.ocorreu_um_erro, R.string.erro_posts_get);
                 }
             };
 
             this.mModel.getPosts(listener);
 
         } else {
-            this.mView.showDialog(R.string.ocorreu_um_erro, R.string.internet_indisponivel);
+            this.mView.showMessageDialog(R.string.ocorreu_um_erro, R.string.internet_indisponivel);
         }
     }
 
     @Override
-    public void add() {
-        this.mView.add();
+    public void goToPagePost() {
+        this.mView.goToPagePost();
     }
 
 }

@@ -29,7 +29,6 @@ import br.dev.oliveira.jsonplaceholderclient.listeners.OnListClickInteractionLis
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.presenters.PostPresenter;
 import br.dev.oliveira.jsonplaceholderclient.receivers.ConnectivityChangeReceiver;
-import br.dev.oliveira.jsonplaceholderclient.utils.network.HttpRequest;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -101,7 +100,6 @@ public class MainActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
 
         this.setListeners();
-        this.getPosts(this.mPosts);
     }
 
     @Override
@@ -127,32 +125,15 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
+    
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
+        if (id == R.id.nav_add_new) {
+            this.mPostPresenter.goToPagePost();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -161,7 +142,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void showDialog(int title, int message) {
+    public void showMessageDialog(int title, int message) {
         new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(message)
@@ -184,7 +165,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void add() {
+    public void goToPagePost() {
         Intent intent = new Intent(MainActivity.this, PostActivity.class);
         startActivity(intent);
     }
@@ -196,7 +177,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.fab) this.add();
+        if (v.getId() == R.id.fab) this.mPostPresenter.goToPagePost();
     }
 
     private void setListeners () {
