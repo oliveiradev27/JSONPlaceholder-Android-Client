@@ -43,10 +43,6 @@ public class PostPresenter implements PostsContract.Presenter {
                 }
             };
 
-            HttpRequest.doGet(
-                    NetworkConstants.ROOT + NetworkConstants.ENDPOINT.POSTS_GET,
-                    listener
-            );
         } else {
             this.mView.showDialog(R.string.ocorreu_um_erro, R.string.internet_indisponivel);
         }

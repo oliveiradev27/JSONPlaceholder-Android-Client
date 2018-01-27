@@ -35,7 +35,7 @@ public class HttpRequest {
             final OnResponseRequestListener listener) {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                url,
+                NetworkConstants.ROOT + url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
