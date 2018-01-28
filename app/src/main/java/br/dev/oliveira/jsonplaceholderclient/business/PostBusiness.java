@@ -5,12 +5,15 @@ import com.android.volley.VolleyError;
 import java.util.List;
 
 import br.dev.oliveira.jsonplaceholderclient.constants.NetworkConstants;
+import br.dev.oliveira.jsonplaceholderclient.contracts.FormPostContract;
 import br.dev.oliveira.jsonplaceholderclient.contracts.PostsContract;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnResponseRequestListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.utils.network.HttpRequest;
 
-public class PostBusiness implements PostsContract.Model {
+public class PostBusiness
+        implements PostsContract.Model,
+        FormPostContract.Model {
 
     private PostsContract.Presenter mPresenter;
 

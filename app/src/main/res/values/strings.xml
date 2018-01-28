@@ -9,6 +9,7 @@
     <string name="nome_do_post">Nome do Post</string>
     <string name="ocorreu_um_erro">Ocorreu um erro!</string>
     <string name="erro_posts_get">Ocorreu um erro ao buscar as informações, verifique sua conexão e tente novamente.</string>
+    <string name="erro_users_get">Ocorreu um erro ao buscar os usuários, verifique sua conexão e tente novamente.</string>
     <string name="internet_indisponivel">É necessário estar conectado a internet!</string>
     <string name="adicionar_um_novo">Adicionar um novo</string>
     <string name="titulo">Titulo</string>

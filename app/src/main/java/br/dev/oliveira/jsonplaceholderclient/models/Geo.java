@@ -2,7 +2,7 @@ package br.dev.oliveira.jsonplaceholderclient.models;
 
 
 public class Geo {
-    private Float lat, lgn;
+    private Float lat, lng;
 
     public Float getLat() {
         return lat;
@@ -12,11 +12,11 @@ public class Geo {
         this.lat = lat;
     }
 
-    public Float getLgn() {
-        return lgn;
+    public Float getLng() {
+        return lng;
     }
 
-    public void setLgn(Float lgn) {
-        this.lgn = lgn;
+    public void setLng(Float lng) {
+        this.lng = lng;
     }
 }
