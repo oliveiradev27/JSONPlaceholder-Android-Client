@@ -29,6 +29,8 @@ public class PostPresenter implements PostsContract.Presenter {
     public void getPosts(final List<Post> posts) {
         if (NetworkUtils.hasInternet(mView.getContext())) {
 
+            mView.showProgressBar();
+
             OnResponseRequestListener listener = new OnResponseRequestListener() {
                 @Override
                 public void onSuccess(String result) {
@@ -36,11 +38,13 @@ public class PostPresenter implements PostsContract.Presenter {
                     }.getType();
                     List<Post> list = new Gson().fromJson(result, listType);
                     posts.addAll(list);
+                    mView.hideProgressBar();
                 }
 
                 @Override
                 public void onError(VolleyError error) {
                     mView.showMessageDialog(R.string.ocorreu_um_erro, R.string.erro_posts_get);
+                    mView.hideProgressBar();
                 }
             };
 
@@ -52,8 +56,13 @@ public class PostPresenter implements PostsContract.Presenter {
     }
 
     @Override
-    public void goToPagePost() {
-        this.mView.goToPagePost();
+    public void goToPagePost(Integer id) {
+        this.mView.goToPagePost(id);
+    }
+
+    @Override
+    public void goToPostForm(Integer id) {
+        this.mView.goToPostForm(id);
     }
 
 }

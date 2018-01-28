@@ -11,4 +11,7 @@
     <string name="erro_posts_get">Ocorreu um erro ao buscar as informações, verifique sua conexão e tente novamente.</string>
     <string name="internet_indisponivel">É necessário estar conectado a internet!</string>
     <string name="adicionar_um_novo">Adicionar um novo</string>
+    <string name="titulo">Titulo</string>
+    <string name="corpo">Corpo</string>
+    <string name="salvar">Salvar</string>
 </resources>

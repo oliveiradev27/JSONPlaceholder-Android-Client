@@ -24,6 +24,7 @@ import java.util.List;
 
 import br.dev.oliveira.jsonplaceholderclient.R;
 import br.dev.oliveira.jsonplaceholderclient.adapters.PostsListAdapter;
+import br.dev.oliveira.jsonplaceholderclient.constants.PostConstants;
 import br.dev.oliveira.jsonplaceholderclient.contracts.PostsContract;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnListClickInteractionListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
@@ -31,13 +32,13 @@ import br.dev.oliveira.jsonplaceholderclient.presenters.PostPresenter;
 import br.dev.oliveira.jsonplaceholderclient.receivers.ConnectivityChangeReceiver;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        View.OnClickListener,
-        PostsContract.View {
+        implements  NavigationView.OnNavigationItemSelectedListener,
+                    View.OnClickListener,
+                    PostsContract.View {
 
     private ViewHolder mViewHolder = new ViewHolder();
     private PostsListAdapter adapter;
-    private PostsContract.Presenter mPostPresenter;
+    private PostsContract.Presenter mPresenter;
     private List<Post> mPosts = new ArrayList<>();
 
 
@@ -57,13 +58,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        this.mPostPresenter = new PostPresenter(this);
+        this.mPresenter = new PostPresenter(this);
 
         // registrando receiver que captura a mudança de conexão
         registerReceiver(
                 new ConnectivityChangeReceiver(),
                 new IntentFilter(
-                        ConnectivityManager.CONNECTIVITY_ACTION));
+                        ConnectivityManager.CONNECTIVITY_ACTION)
+        );
 
         this.mViewHolder.fab = findViewById(R.id.fab);
         // Capturando recycler view
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity
         OnListClickInteractionListener listener = new OnListClickInteractionListener() {
             @Override
             public void onClickShow(Integer postId) {
-
+                MainActivity.this.mPresenter.goToPagePost(postId);
             }
 
             @Override
@@ -125,7 +127,7 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-    
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -133,7 +135,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_add_new) {
-            this.mPostPresenter.goToPagePost();
+            this.mPresenter.goToPostForm(null);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -161,12 +163,20 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void getPosts(List<Post> post) {
-        this.mPostPresenter.getPosts(post);
+        this.mPresenter.getPosts(post);
     }
 
     @Override
-    public void goToPagePost() {
+    public void goToPagePost(Integer id) {
         Intent intent = new Intent(MainActivity.this, PostActivity.class);
+        intent.putExtra(PostConstants.ATTRIBUTES.ID, id);
+        startActivity(intent);
+    }
+
+    @Override
+    public void goToPostForm(Integer id) {
+        Intent intent = new Intent(MainActivity.this, FormPostActivity.class);
+        intent.putExtra(PostConstants.ATTRIBUTES.ID, id);
         startActivity(intent);
     }
 
@@ -177,7 +187,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.fab) this.mPostPresenter.goToPagePost();
+        if (v.getId() == R.id.fab) this.mPresenter.goToPostForm(null);
     }
 
     private void setListeners () {

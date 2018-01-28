@@ -3,11 +3,8 @@ package br.dev.oliveira.jsonplaceholderclient.contracts;
 
 import android.content.Context;
 
-import com.android.volley.VolleyError;
-
 import java.util.List;
 
-import br.dev.oliveira.jsonplaceholderclient.listeners.OnListClickInteractionListener;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnResponseRequestListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 
@@ -27,11 +24,13 @@ public interface PostsContract {
         void hideProgressBar();
         void getPosts(List<Post> post);
         Context getContext();
-        void goToPagePost();
+        void goToPagePost(Integer id);
+        void goToPostForm(Integer id);
     }
 
     interface Presenter {
         void getPosts(List<Post> posts);
-        void goToPagePost();
+        void goToPagePost(Integer id);
+        void goToPostForm(Integer id);
     }
 }

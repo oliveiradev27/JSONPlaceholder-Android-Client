@@ -25,6 +25,8 @@
         </activity>
         <activity android:name=".views.PostActivity">
         </activity>
+        <activity android:name=".views.FormPostActivity">
+        </activity>
     </application>
 
 </manifest>
