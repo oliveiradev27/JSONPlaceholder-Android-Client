@@ -31,7 +31,7 @@ public class HttpRequest {
 
     public static void doPost(
             final String url,
-            final JSONObject requestBody,
+            final String requestBody,
             final OnResponseRequestListener listener) {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
@@ -55,7 +55,7 @@ public class HttpRequest {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                final byte[] body = requestBody.toString().getBytes();
+                final byte[] body = requestBody.getBytes();
                 if (body != null) {
                     return body;
                 }

@@ -15,4 +15,9 @@
     <string name="titulo">Titulo</string>
     <string name="corpo">Corpo</string>
     <string name="salvar">Salvar</string>
+    <string name="erro_save_post">Ocorreu um erro ao salvar o post, tente novamente mais tarde!</string>
+    <string name="mensagem_do_sistema">Mensagem do sistema</string>
+    <string name="post_add_sucesso">Post cadastrado com sucesso!</string>
+    <string name="usuario">Usuário</string>
+    <string name="cancelar">Cancelar</string>
 </resources>

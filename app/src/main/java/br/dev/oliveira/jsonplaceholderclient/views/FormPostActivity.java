@@ -1,12 +1,11 @@
 package br.dev.oliveira.jsonplaceholderclient.views;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
@@ -75,6 +74,6 @@ public class FormPostActivity extends AppCompatActivity
     private static class ViewHolder {
         TextInputEditText mEditTitle, mEditBody;
         Spinner mSpinnerUsers;
-        Button mButtonSave;
+        Button mButtonSave, mButtonCancel;
     }
 }

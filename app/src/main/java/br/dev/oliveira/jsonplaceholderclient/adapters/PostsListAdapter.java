@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 import br.dev.oliveira.jsonplaceholderclient.R;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnListClickInteractionListener;
@@ -20,7 +19,7 @@ public class PostsListAdapter extends RecyclerView.Adapter<PostsViewHolder> {
     private Context mContext;
     private OnListClickInteractionListener mOnListClickInteractionListener;
 
-    public PostsListAdapter (
+    public PostsListAdapter(
             Context context,
             List<Post> posts,
             OnListClickInteractionListener listener

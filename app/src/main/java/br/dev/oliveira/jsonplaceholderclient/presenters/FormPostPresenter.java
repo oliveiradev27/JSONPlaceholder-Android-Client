@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.dev.oliveira.jsonplaceholderclient.R;
+import br.dev.oliveira.jsonplaceholderclient.business.PostBusiness;
 import br.dev.oliveira.jsonplaceholderclient.business.UserBusinnes;
 import br.dev.oliveira.jsonplaceholderclient.contracts.FormPostContract;
-import br.dev.oliveira.jsonplaceholderclient.contracts.PostsContract;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnResponseRequestListener;
 import br.dev.oliveira.jsonplaceholderclient.models.User;
 import br.dev.oliveira.jsonplaceholderclient.utils.infra.NetworkUtils;
@@ -20,7 +20,7 @@ import br.dev.oliveira.jsonplaceholderclient.utils.infra.NetworkUtils;
 public class FormPostPresenter implements FormPostContract.Presenter {
 
     private FormPostContract.View mView;
-    private PostsContract.Model mPostBusinnes;
+    private PostBusiness mPostBusinnes;
     private UserBusinnes mUserBusinnes;
 
     public FormPostPresenter(FormPostContract.View view) {
