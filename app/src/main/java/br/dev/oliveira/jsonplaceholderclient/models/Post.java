@@ -7,6 +7,14 @@ public class Post {
     private String  title;
     private String  body;
 
+    public Post (){}
+
+    public Post (Integer userId, String title, String body) {
+        this.setUserId(userId);
+        this.setTitle(title);
+        this.setBody(body);
+    }
+
     public Integer getId() {
         return id;
     }

@@ -25,6 +25,7 @@ import java.util.List;
 import br.dev.oliveira.jsonplaceholderclient.R;
 import br.dev.oliveira.jsonplaceholderclient.adapters.PostsListAdapter;
 import br.dev.oliveira.jsonplaceholderclient.constants.PostConstants;
+import br.dev.oliveira.jsonplaceholderclient.contracts.Base;
 import br.dev.oliveira.jsonplaceholderclient.contracts.PostsContract;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnListClickInteractionListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
@@ -61,11 +62,111 @@ public class MainActivity extends AppCompatActivity
         this.mPresenter = new PostPresenter(this);
 
         // registrando receiver que captura a mudança de conexão
-        registerReceiver(
+        /*registerReceiver(
                 new ConnectivityChangeReceiver(),
                 new IntentFilter(
                         ConnectivityManager.CONNECTIVITY_ACTION)
-        );
+        );*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         this.mViewHolder.fab = findViewById(R.id.fab);
         // Capturando recycler view
@@ -92,6 +193,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             @Override
+
             public void onClickDelete(Integer postId) {
 
             }
@@ -99,6 +201,7 @@ public class MainActivity extends AppCompatActivity
 
         adapter = new PostsListAdapter(this, this.mPosts, listener);
         this.mViewHolder.mRecyclerPosts.setAdapter(adapter);
+
         adapter.notifyDataSetChanged();
 
         this.setListeners();
@@ -119,7 +222,6 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         this.getPosts(this.mPosts);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

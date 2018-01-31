@@ -10,14 +10,6 @@ import br.dev.oliveira.jsonplaceholderclient.models.Post;
 
 public interface PostsContract {
 
-    interface Model {
-        void getPosts(List<Post> posts);
-        void post(Integer postId);
-        void add(Post post);
-        void del(Integer postId);
-        void upd(Post post);
-    }
-
     interface View {
         void showMessageDialog(int title, int message);
         void showProgressBar();
@@ -26,6 +18,8 @@ public interface PostsContract {
         Context getContext();
         void goToPagePost(Integer id);
         void goToPostForm(Integer id);
+        void onBackPressed();
+
     }
 
     interface Presenter {
@@ -34,6 +28,7 @@ public interface PostsContract {
         void goToPostForm(Integer id);
         void showProgressBar();
         void hideProgressBar();
+        void onBackPressed();
         void showMessageDialog(int title, int message);
 
     }

@@ -10,25 +10,21 @@ import java.util.List;
 
 import br.dev.oliveira.jsonplaceholderclient.R;
 import br.dev.oliveira.jsonplaceholderclient.constants.NetworkConstants;
-import br.dev.oliveira.jsonplaceholderclient.contracts.FormPostContract;
-import br.dev.oliveira.jsonplaceholderclient.contracts.PostsContract;
+import br.dev.oliveira.jsonplaceholderclient.contracts.Base;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnResponseRequestListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.utils.network.HttpRequest;
 
-public class PostBusiness
-        implements PostsContract.Model,
-        FormPostContract.Model {
+public class PostBusiness {
 
-    private PostsContract.Presenter mPresenter;
+    private Base.Presenter mPresenter;
 
 
-    public PostBusiness(PostsContract.Presenter presenter) {
+    public PostBusiness(Base.Presenter presenter) {
         this.mPresenter = presenter;
     }
 
-    @Override
-    public void getPosts(final List<Post> posts) {
+    public void get(final List<Post> posts) {
 
         OnResponseRequestListener listener = new OnResponseRequestListener() {
             @Override
@@ -39,13 +35,11 @@ public class PostBusiness
                 List<Post> list = new Gson().fromJson(result, listType);
                 posts.clear();
                 posts.addAll(list);
-                mPresenter.hideProgressBar();
             }
 
             @Override
             public void onError(VolleyError error) {
 
-                mPresenter.hideProgressBar();
                 mPresenter.showMessageDialog(R.string.ocorreu_um_erro, R.string.erro_posts_get);
 
             }
@@ -55,20 +49,13 @@ public class PostBusiness
 
     }
 
-    @Override
-    public void post(Integer postId) {
-
-    }
-
-    @Override
-    public void add(final Post post) {
+    public void save(final Post post) {
 
         OnResponseRequestListener listener = new OnResponseRequestListener() {
             @Override
             public void onSuccess(String result) {
                 Post p = new Gson().fromJson(result, Post.class);
                 post.setId(p.getId());
-                mPresenter.hideProgressBar();
                 mPresenter.showMessageDialog(
                         R.string.mensagem_do_sistema,
                         R.string.post_add_sucesso
@@ -78,26 +65,23 @@ public class PostBusiness
 
             @Override
             public void onError(VolleyError error) {
-                mPresenter.hideProgressBar();
                 mPresenter.showMessageDialog(R.string.ocorreu_um_erro, R.string.erro_save_post);
             }
         };
 
-        HttpRequest.doPost(
-                NetworkConstants.ENDPOINT.POSTS_POST,
-                new Gson().toJson(post),
-                listener
-        );
-
-    }
-
-    @Override
-    public void del(Integer postId) {
-
-    }
-
-    @Override
-    public void upd(Post post) {
+        if (post.getId().toString().isEmpty()) {
+            HttpRequest.doPost(
+                    NetworkConstants.ENDPOINT.POSTS_POST,
+                    new Gson().toJson(post),
+                    listener
+            );
+        } else {
+            HttpRequest.doPut(
+                    NetworkConstants.ENDPOINT.POSTS_PUT + post.getId(),
+                    new Gson().toJson(post),
+                    listener
+            );
+        }
 
     }
 }

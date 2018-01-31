@@ -20,4 +20,8 @@
     <string name="post_add_sucesso">Post cadastrado com sucesso!</string>
     <string name="usuario">Usuário</string>
     <string name="cancelar">Cancelar</string>
+    <string name="post_corpo_requerido">É necessário o preenchimento do corpo do Post!</string>
+    <string name="post_titulo_requerido">É necessário o preenchimento do titúlo do Post!</string>
+    <string name="post_usuario_requerido">É necessário o preenchimento do usuário do Post!</string>
+
 </resources>
