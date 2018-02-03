@@ -7,16 +7,15 @@ import br.dev.oliveira.jsonplaceholderclient.business.PostBusiness;
 import br.dev.oliveira.jsonplaceholderclient.contracts.Base;
 import br.dev.oliveira.jsonplaceholderclient.contracts.PostsContract;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
-import br.dev.oliveira.jsonplaceholderclient.models.User;
 import br.dev.oliveira.jsonplaceholderclient.utils.infra.NetworkUtils;
 
-public class PostPresenter implements Base.Presenter, PostsContract.Presenter {
+public class PostsPresenter implements Base.Presenter, PostsContract.Presenter {
 
     private PostsContract.View mView;
     private PostBusiness mModel;
     private Integer postIdDeleted;
 
-    public PostPresenter(PostsContract.View view) {
+    public PostsPresenter(PostsContract.View view) {
         this.mView = view;
         this.mModel = new PostBusiness(this);
     }
@@ -59,13 +58,13 @@ public class PostPresenter implements Base.Presenter, PostsContract.Presenter {
     }
 
     @Override
-    public void delete(){
+    public void delete() {
         mModel.delete(postIdDeleted);
         mView.getPosts();
     }
 
     @Override
-    public void showConfirmAction(Integer postId){
+    public void showConfirmAction(Integer postId) {
         this.postIdDeleted = postId;
         this.mView.showConfirmAction(R.string.confirma_a_exclusao);
 

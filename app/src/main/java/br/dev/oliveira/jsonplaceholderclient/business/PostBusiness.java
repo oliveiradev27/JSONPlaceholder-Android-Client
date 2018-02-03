@@ -24,6 +24,32 @@ public class PostBusiness {
         this.mPresenter = presenter;
     }
 
+    public void get(final Post post) {
+
+        OnResponseRequestListener listener = new OnResponseRequestListener() {
+            @Override
+            public void onSuccess(String result) {
+
+                Post p = new Gson().fromJson(result, Post.class);
+                post.setId(p.getId());
+                post.setTitle(p.getTitle());
+                post.setBody(p.getBody());
+                post.setUserId(p.getUserId());
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+                mPresenter.showMessageDialog(R.string.ocorreu_um_erro, R.string.erro_posts_get);
+
+            }
+        };
+
+        HttpRequest.doGet(NetworkConstants.ENDPOINT.POSTS_GET, listener);
+
+    }
+
     public void get(final List<Post> posts) {
 
         OnResponseRequestListener listener = new OnResponseRequestListener() {

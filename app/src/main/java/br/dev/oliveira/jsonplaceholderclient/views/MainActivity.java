@@ -2,8 +2,6 @@ package br.dev.oliveira.jsonplaceholderclient.views;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -27,12 +25,10 @@ import java.util.List;
 import br.dev.oliveira.jsonplaceholderclient.R;
 import br.dev.oliveira.jsonplaceholderclient.adapters.PostsListAdapter;
 import br.dev.oliveira.jsonplaceholderclient.constants.PostConstants;
-import br.dev.oliveira.jsonplaceholderclient.contracts.Base;
 import br.dev.oliveira.jsonplaceholderclient.contracts.PostsContract;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnListClickInteractionListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
-import br.dev.oliveira.jsonplaceholderclient.presenters.PostPresenter;
-import br.dev.oliveira.jsonplaceholderclient.receivers.ConnectivityChangeReceiver;
+import br.dev.oliveira.jsonplaceholderclient.presenters.PostsPresenter;
 
 public class MainActivity extends AppCompatActivity
         implements  NavigationView.OnNavigationItemSelectedListener,
@@ -61,7 +57,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        this.mPresenter = new PostPresenter(this);
+        this.mPresenter = new PostsPresenter(this);
 
         // registrando receiver que captura a mudança de conexão
         /*registerReceiver(
@@ -191,7 +187,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void goToPagePost(Integer id) {
-        Intent intent = new Intent(MainActivity.this, PostActivity.class);
+        Intent intent = new Intent(MainActivity.this, PostViewActivity.class);
         intent.putExtra(PostConstants.ATTRIBUTES.ID, id);
         startActivity(intent);
     }
