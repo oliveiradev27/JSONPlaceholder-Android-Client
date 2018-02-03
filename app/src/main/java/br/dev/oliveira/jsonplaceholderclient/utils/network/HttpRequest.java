@@ -123,4 +123,23 @@ public class HttpRequest {
 
             mRequestQueue.add(stringRequest);
     }
+
+    public static void doDelete(final String url, final OnResponseRequestListener listener) {
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.PUT,
+                NetworkConstants.ROOT+ url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        listener.onSuccess(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onError(error);
+            }
+        });
+
+        mRequestQueue.add(stringRequest);
+    }
 }

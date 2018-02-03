@@ -84,4 +84,28 @@ public class PostBusiness {
         }
 
     }
+
+    public void delete(Integer postId) {
+        OnResponseRequestListener listener = new OnResponseRequestListener() {
+            @Override
+            public void onSuccess(String result) {
+                mPresenter.showMessageDialog(
+                        R.string.mensagem_do_sistema,
+                        R.string.excluido_com_sucesso
+                );
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                mPresenter.showMessageDialog(R.string.ocorreu_um_erro, R.string.erro_save_post);
+            }
+        };
+
+        String url = NetworkConstants.ENDPOINT.POST_DELETE + postId;
+        HttpRequest.doDelete(
+                url,
+                listener
+        );
+    }
 }

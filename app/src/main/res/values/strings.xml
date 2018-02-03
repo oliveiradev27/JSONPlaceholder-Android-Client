@@ -23,5 +23,10 @@
     <string name="post_corpo_requerido">É necessário o preenchimento do corpo do Post!</string>
     <string name="post_titulo_requerido">É necessário o preenchimento do titúlo do Post!</string>
     <string name="post_usuario_requerido">É necessário o preenchimento do usuário do Post!</string>
+    <string name="desfazer">Desfazer</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="post_excluido">Post exclúido.</string>
+    <string name="confirma_a_exclusao">Confirma a exclusão?</string>
+    <string name="excluido_com_sucesso">Excluido com sucesso!</string>
 
 </resources>

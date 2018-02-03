@@ -14,7 +14,7 @@ public class PostPresenter implements Base.Presenter, PostsContract.Presenter {
 
     private PostsContract.View mView;
     private PostBusiness mModel;
-    private List<User> mListUsers;
+    private Integer postIdDeleted;
 
     public PostPresenter(PostsContract.View view) {
         this.mView = view;
@@ -56,6 +56,19 @@ public class PostPresenter implements Base.Presenter, PostsContract.Presenter {
     @Override
     public void showMessageDialog(int title, int message) {
         this.mView.showMessageDialog(title, message);
+    }
+
+    @Override
+    public void delete(){
+        mModel.delete(postIdDeleted);
+        mView.getPosts();
+    }
+
+    @Override
+    public void showConfirmAction(Integer postId){
+        this.postIdDeleted = postId;
+        this.mView.showConfirmAction(R.string.confirma_a_exclusao);
+
     }
 
     @Override

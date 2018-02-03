@@ -9,6 +9,7 @@ public class NetworkConstants {
         public static final String USERS_GET  = "users";
         public static final String POSTS_POST = "posts";
         public static final String POSTS_PUT  = "posts/";
+        public static final String POST_DELETE = "posts/";
     }
 
 

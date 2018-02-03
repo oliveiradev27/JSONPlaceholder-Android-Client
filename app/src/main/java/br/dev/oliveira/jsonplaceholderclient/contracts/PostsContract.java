@@ -12,9 +12,10 @@ public interface PostsContract {
 
     interface View {
         void showMessageDialog(int title, int message);
+        void showConfirmAction(int message);
         void showProgressBar();
         void hideProgressBar();
-        void getPosts(List<Post> post);
+        void getPosts();
         Context getContext();
         void goToPagePost(Integer id);
         void goToPostForm(Integer id);
@@ -30,6 +31,8 @@ public interface PostsContract {
         void hideProgressBar();
         void onBackPressed();
         void showMessageDialog(int title, int message);
-
+        void delete();
+        void showConfirmAction(Integer postId);
     }
+
 }

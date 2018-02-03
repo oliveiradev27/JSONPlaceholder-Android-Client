@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,105 +70,7 @@ public class MainActivity extends AppCompatActivity
                         ConnectivityManager.CONNECTIVITY_ACTION)
         );*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        this.mViewHolder.linearContent = findViewById(R.id.linear_content);
 
         this.mViewHolder.fab = findViewById(R.id.fab);
         // Capturando recycler view
@@ -195,7 +99,7 @@ public class MainActivity extends AppCompatActivity
             @Override
 
             public void onClickDelete(Integer postId) {
-
+                MainActivity.this.mPresenter.showConfirmAction(postId);
             }
         };
 
@@ -220,7 +124,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        this.getPosts(this.mPosts);
+        this.getPosts();
     }
 
     @Override
@@ -264,8 +168,25 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void getPosts(List<Post> post) {
-        this.mPresenter.getPosts(post);
+    public void showConfirmAction(int message) {
+        this.mViewHolder.mSnackbar = Snackbar.make(
+                this.mViewHolder.linearContent,
+                message,
+                Snackbar.LENGTH_LONG
+        );
+        this.mViewHolder.mSnackbar.setAction(R.string.confirmar, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mPresenter.delete();
+
+            }
+        }).show();
+    }
+
+    @Override
+    public void getPosts() {
+        this.mPresenter.getPosts(this.mPosts);
     }
 
     @Override
@@ -299,5 +220,7 @@ public class MainActivity extends AppCompatActivity
     private static class ViewHolder {
         RecyclerView mRecyclerPosts;
         FloatingActionButton fab;
+        Snackbar mSnackbar;
+        LinearLayout linearContent;
     }
 }
