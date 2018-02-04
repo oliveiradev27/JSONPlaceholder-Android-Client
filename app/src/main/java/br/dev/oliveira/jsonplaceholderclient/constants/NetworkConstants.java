@@ -11,6 +11,7 @@ public class NetworkConstants {
         public static final String POST_PUT    = "posts/";
         public static final String POST_DELETE = "posts/";
         public static final String POST_GET    = "posts/";
+        public static final String USER_GET    = "users/";
     }
 
 

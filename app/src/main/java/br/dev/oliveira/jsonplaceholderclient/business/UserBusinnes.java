@@ -11,6 +11,7 @@ import java.util.List;
 import br.dev.oliveira.jsonplaceholderclient.R;
 import br.dev.oliveira.jsonplaceholderclient.constants.NetworkConstants;
 import br.dev.oliveira.jsonplaceholderclient.contracts.Base;
+import br.dev.oliveira.jsonplaceholderclient.listeners.OnBindDataListener;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnResponseRequestListener;
 import br.dev.oliveira.jsonplaceholderclient.models.User;
 import br.dev.oliveira.jsonplaceholderclient.utils.network.HttpRequest;
@@ -23,7 +24,30 @@ public class UserBusinnes {
         this.mPresenter = presenter;
     }
 
-    public void getUsers (final List<User> users) {
+
+    public void get(Integer id, final OnBindDataListener<User> bindDataListener) {
+
+        OnResponseRequestListener listener = new OnResponseRequestListener() {
+            @Override
+            public void onSuccess(String result) {
+
+                User user = new Gson().fromJson(result, User.class);
+                bindDataListener.onBind(user);
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                mPresenter.showMessageDialog(R.string.ocorreu_um_erro, R.string.erro_users_get);
+            }
+        };
+
+        HttpRequest.doGet(NetworkConstants.ENDPOINT.USER_GET + id, listener);
+
+    }
+
+
+    public void get(final List<User> users) {
 
 
         OnResponseRequestListener listener = new OnResponseRequestListener() {

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import br.dev.oliveira.jsonplaceholderclient.R;
@@ -81,13 +80,21 @@ public class PostViewActivity extends AppCompatActivity implements PostViewContr
         return this;
     }
 
-    public Integer getPostId() {
-        return getIntent().getIntExtra(PostConstants.ATTRIBUTES.ID, 0);
-    }
 
-    public void setData() {
+    @Override
+    public void setPostData() {
         this.mViewHolder.textPostTitle.setText(post.getTitle());
         this.mViewHolder.textPostBody.setText(post.getBody());
+    }
+
+    @Override
+    public void setUsername(String username) {
+        this.mViewHolder.textPostUser.setText(username);
+
+    }
+
+    public Integer getPostId() {
+        return getIntent().getIntExtra(PostConstants.ATTRIBUTES.ID, 0);
     }
 
     private static class ViewHolder {

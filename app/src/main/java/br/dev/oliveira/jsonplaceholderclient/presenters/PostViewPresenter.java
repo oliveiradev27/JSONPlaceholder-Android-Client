@@ -1,10 +1,12 @@
 package br.dev.oliveira.jsonplaceholderclient.presenters;
 
 import br.dev.oliveira.jsonplaceholderclient.business.PostBusiness;
+import br.dev.oliveira.jsonplaceholderclient.business.UserBusinnes;
 import br.dev.oliveira.jsonplaceholderclient.contracts.Base;
 import br.dev.oliveira.jsonplaceholderclient.contracts.PostViewContract;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnBindDataListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
+import br.dev.oliveira.jsonplaceholderclient.models.User;
 import br.dev.oliveira.jsonplaceholderclient.utils.infra.NetworkUtils;
 
 public class PostViewPresenter implements
@@ -13,10 +15,12 @@ public class PostViewPresenter implements
 
     private PostViewContract.View mView;
     private PostBusiness mPostBusiness;
+    private UserBusinnes mUserBusiness;
 
     public PostViewPresenter(PostViewContract.View view) {
         this.mView = view;
         this.mPostBusiness = new PostBusiness(this);
+        this.mUserBusiness = new UserBusinnes(this);
     }
 
 
@@ -46,7 +50,7 @@ public class PostViewPresenter implements
         if (NetworkUtils.hasInternet(mView.getContext())) {
             this.mView.showProgressBar();
 
-            OnBindDataListener listener = new OnBindDataListener<Post>() {
+            OnBindDataListener<Post> listener = new OnBindDataListener<Post>() {
                 @Override
                 public void onBind(Post data) {
 
@@ -55,18 +59,34 @@ public class PostViewPresenter implements
                     post.setBody(data.getBody());
                     post.setUserId(data.getUserId());
 
-                    PostViewPresenter.this.mView.setData();
+                    PostViewPresenter.this.mView.setPostData();
+                    PostViewPresenter.this.getUser(post.getUserId());
                     PostViewPresenter.this.mView.hideProgressBar();
                 }
             };
 
             this.mPostBusiness.get(post.getId(), listener);
+            this.getUser(post.getUserId());
 
         }
 
+
+
+    }
+
+    private void getUser(Integer userId) {
+        OnBindDataListener<User> listener = new OnBindDataListener<User>() {
+            @Override
+            public void onBind(User data) {
+                PostViewPresenter.this.mView.setUsername(data.getName());
+            }
+
+        };
+
+        this.mUserBusiness.get(userId, listener);
     }
 
     public void setData() {
-        this.mView.setData();
+        this.mView.setPostData();
     }
 }

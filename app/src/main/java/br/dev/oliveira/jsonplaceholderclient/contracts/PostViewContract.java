@@ -12,7 +12,8 @@ public interface PostViewContract {
         void showProgressBar();
         void hideProgressBar();
         Integer getPostId();
-        void setData();
+        void setPostData();
+        void setUsername(String username);
         void getPost();
         Context getContext();
 

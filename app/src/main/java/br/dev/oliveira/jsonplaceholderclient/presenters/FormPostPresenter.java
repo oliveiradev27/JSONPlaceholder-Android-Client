@@ -30,7 +30,7 @@ public class FormPostPresenter implements Base.Presenter, FormPostContract.Prese
     @Override
     public void getUsers() {
         if (NetworkUtils.hasInternet(this.mView.getContext())) {
-            mUserBusinnes.getUsers(this.mListUsers);
+            mUserBusinnes.get(this.mListUsers);
         } else {
             mView.showMessageDialog(R.string.ocorreu_um_erro, R.string.internet_indisponivel);
         }
