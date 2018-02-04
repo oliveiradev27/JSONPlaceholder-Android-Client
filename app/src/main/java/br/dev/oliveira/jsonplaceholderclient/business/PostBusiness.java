@@ -1,5 +1,7 @@
 package br.dev.oliveira.jsonplaceholderclient.business;
 
+import android.support.annotation.NonNull;
+
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -11,6 +13,7 @@ import java.util.List;
 import br.dev.oliveira.jsonplaceholderclient.R;
 import br.dev.oliveira.jsonplaceholderclient.constants.NetworkConstants;
 import br.dev.oliveira.jsonplaceholderclient.contracts.Base;
+import br.dev.oliveira.jsonplaceholderclient.listeners.OnBindDataListener;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnResponseRequestListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.utils.network.HttpRequest;
@@ -46,9 +49,34 @@ public class PostBusiness {
             }
         };
 
-        HttpRequest.doGet(NetworkConstants.ENDPOINT.POSTS_GET, listener);
+        HttpRequest.doGet(NetworkConstants.ENDPOINT.POST_GET + post.getId(), listener);
 
     }
+
+    public void get(@NonNull Integer id, final OnBindDataListener<Post> bindDataListener) {
+
+        OnResponseRequestListener listener = new OnResponseRequestListener() {
+            @Override
+            public void onSuccess(String result) {
+
+                Post p = new Gson().fromJson(result, Post.class);
+                bindDataListener.onBind(p);
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+                mPresenter.showMessageDialog(R.string.ocorreu_um_erro, R.string.erro_posts_get);
+
+            }
+        };
+
+
+        HttpRequest.doGet(NetworkConstants.ENDPOINT.POST_GET + id, listener);
+
+    }
+
 
     public void get(final List<Post> posts) {
 
@@ -97,13 +125,13 @@ public class PostBusiness {
 
         if (post.getId().toString().isEmpty()) {
             HttpRequest.doPost(
-                    NetworkConstants.ENDPOINT.POSTS_POST,
+                    NetworkConstants.ENDPOINT.POST_POST,
                     new Gson().toJson(post),
                     listener
             );
         } else {
             HttpRequest.doPut(
-                    NetworkConstants.ENDPOINT.POSTS_PUT + post.getId(),
+                    NetworkConstants.ENDPOINT.POST_PUT + post.getId(),
                     new Gson().toJson(post),
                     listener
             );

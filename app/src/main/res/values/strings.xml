@@ -28,5 +28,6 @@
     <string name="post_excluido">Post exclúido.</string>
     <string name="confirma_a_exclusao">Confirma a exclusão?</string>
     <string name="excluido_com_sucesso">Excluido com sucesso!</string>
+    <string name="carregando">Carregando..</string>
 
 </resources>

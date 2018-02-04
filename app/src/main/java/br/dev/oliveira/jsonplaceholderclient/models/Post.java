@@ -7,7 +7,10 @@ public class Post {
     private String  title;
     private String  body;
 
-    public Post (){}
+    public Post (){
+        this.setTitle("");
+        this.setBody("");
+    }
 
     public Post (Integer userId, String title, String body) {
         this.setUserId(userId);

@@ -11,6 +11,8 @@ public interface PostViewContract {
         void showConfirmAction(int message);
         void showProgressBar();
         void hideProgressBar();
+        Integer getPostId();
+        void setData();
         void getPost();
         Context getContext();
 
@@ -22,5 +24,6 @@ public interface PostViewContract {
         void showProgressBar();
         void hideProgressBar();
         void getPost(Post post);
+        void setData();
     }
 }
