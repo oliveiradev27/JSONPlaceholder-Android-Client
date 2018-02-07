@@ -6,6 +6,7 @@ import br.dev.oliveira.jsonplaceholderclient.R;
 import br.dev.oliveira.jsonplaceholderclient.business.PostBusiness;
 import br.dev.oliveira.jsonplaceholderclient.contracts.Base;
 import br.dev.oliveira.jsonplaceholderclient.contracts.PostsContract;
+import br.dev.oliveira.jsonplaceholderclient.listeners.OnBindDataListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.utils.infra.NetworkUtils;
 
@@ -25,7 +26,16 @@ public class PostsPresenter implements Base.Presenter, PostsContract.Presenter {
         if (NetworkUtils.hasInternet(mView.getContext())) {
 
             mView.showProgressBar();
-            this.mModel.get(posts);
+            OnBindDataListener<List<Post>> listener = new OnBindDataListener<List<Post>>() {
+                @Override
+                public void onBind(List<Post> data) {
+                    posts.clear();
+                    posts.addAll(data);
+                    hideProgressBar();
+                }
+            };
+
+            this.mModel.get(listener);
 
         } else {
             this.showMessageDialog(R.string.ocorreu_um_erro, R.string.internet_indisponivel);

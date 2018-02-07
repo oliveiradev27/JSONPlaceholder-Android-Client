@@ -1,6 +1,7 @@
 package br.dev.oliveira.jsonplaceholderclient.utils.network;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -12,6 +13,8 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+
 import br.dev.oliveira.jsonplaceholderclient.constants.NetworkConstants;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnResponseRequestListener;
 
@@ -19,11 +22,13 @@ public class HttpRequest {
 
     private static HttpRequest mHttpRequest;
     private static RequestQueue mRequestQueue;
+    private static Context mContext;
 
     private HttpRequest() {
     }
 
     public static void initialize(Context context) {
+        mContext = context;
         if (mRequestQueue == null)
             mRequestQueue = Volley.newRequestQueue(context);
     }
@@ -33,9 +38,13 @@ public class HttpRequest {
             final String url,
             final String requestBody,
             final OnResponseRequestListener listener) {
+
+        //final String body = "{\"name\": \"morpheus\", \"job\": \"leader\"}";
+
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 NetworkConstants.ROOT + url,
+                //"https://reqres.in/api/users",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -46,30 +55,32 @@ public class HttpRequest {
             public void onErrorResponse(VolleyError error) {
                 listener.onError(error);
             }
-        }){
+        }) {
             @Override
             public String getBodyContentType() {
-                return NetworkConstants.CONTENT_TYPE;
+                return "application/json; charset=UTF-8";
             }
-
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                final byte[] body = requestBody.getBytes();
-                if (body != null) {
-                    return body;
+                try {
+                    Log.d("JSONPlaceholder", "Json enviado na requisição: " + requestBody);
+                    return requestBody.getBytes("utf-8");
+                    //return body.getBytes("UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                    return null;
                 }
-                return super.getBody();
             }
         };
-
         mRequestQueue.add(stringRequest);
+
     }
 
     public static void doGet(final String url, final OnResponseRequestListener listener) {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET,
-                NetworkConstants.ROOT+ url,
+                NetworkConstants.ROOT + url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -91,43 +102,43 @@ public class HttpRequest {
             final String requestBody,
             final OnResponseRequestListener listener
     ) {
-            StringRequest stringRequest = new StringRequest(
-                    Request.Method.PUT,
-                    NetworkConstants.ROOT + url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            listener.onSuccess(response);
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    listener.onError(error);
-                }
-            }){
-                @Override
-                public String getBodyContentType() {
-                    return NetworkConstants.CONTENT_TYPE;
-                }
-
-
-                @Override
-                public byte[] getBody() throws AuthFailureError {
-                    final byte[] body = requestBody.getBytes();
-                    if (body != null) {
-                        return body;
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.PUT,
+                NetworkConstants.ROOT + url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        listener.onSuccess(response);
                     }
-                    return super.getBody();
-                }
-            };
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onError(error);
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return NetworkConstants.CONTENT_TYPE;
+            }
 
-            mRequestQueue.add(stringRequest);
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                final byte[] body = requestBody.getBytes();
+                if (body != null) {
+                    return body;
+                }
+                return super.getBody();
+            }
+        };
+
+        mRequestQueue.add(stringRequest);
     }
 
     public static void doDelete(final String url, final OnResponseRequestListener listener) {
         StringRequest stringRequest = new StringRequest(
-                Request.Method.PUT,
-                NetworkConstants.ROOT+ url,
+                Request.Method.DELETE,
+                NetworkConstants.ROOT + url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

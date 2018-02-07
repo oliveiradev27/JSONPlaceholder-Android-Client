@@ -1,6 +1,8 @@
 package br.dev.oliveira.jsonplaceholderclient.presenters;
 
 
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +11,11 @@ import br.dev.oliveira.jsonplaceholderclient.business.PostBusiness;
 import br.dev.oliveira.jsonplaceholderclient.business.UserBusinnes;
 import br.dev.oliveira.jsonplaceholderclient.contracts.Base;
 import br.dev.oliveira.jsonplaceholderclient.contracts.FormPostContract;
+import br.dev.oliveira.jsonplaceholderclient.listeners.OnBindDataListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.models.User;
 import br.dev.oliveira.jsonplaceholderclient.utils.infra.NetworkUtils;
+import br.dev.oliveira.jsonplaceholderclient.views.FormPostActivity;
 
 public class FormPostPresenter implements Base.Presenter, FormPostContract.Presenter {
 
@@ -30,7 +34,20 @@ public class FormPostPresenter implements Base.Presenter, FormPostContract.Prese
     @Override
     public void getUsers() {
         if (NetworkUtils.hasInternet(this.mView.getContext())) {
-            mUserBusinnes.get(this.mListUsers);
+
+            this.mView.showProgressBar();
+
+            OnBindDataListener<List<User>> listener = new OnBindDataListener<List<User>>() {
+                @Override
+                public void onBind(List<User> data) {
+                    mListUsers.clear();
+                    mListUsers.addAll(data);
+                    fillListUsername();
+                    mView.hideProgressBar();
+                }
+            };
+
+            mUserBusinnes.get(listener);
         } else {
             mView.showMessageDialog(R.string.ocorreu_um_erro, R.string.internet_indisponivel);
         }
@@ -47,15 +64,30 @@ public class FormPostPresenter implements Base.Presenter, FormPostContract.Prese
     }
 
     @Override
-    public void fillListUsername(List<String> listUserName) {
+    public void fillListUsername() {
 
-        this.mUserBusinnes.getUsernames(listUserName);
+        this.mView.getListUsernames().clear();
 
+        for (User user : this.mListUsers) {
+            this.mView.getListUsernames().add(user.getName());
+        }
+
+        this.mView.setAdapterUsers();
     }
 
     @Override
     public void showMessageDialog(int title, int message) {
         mView.showMessageDialog(title, message);
+    }
+
+    @Override
+    public void showProgressBar() {
+        this.mView.showProgressBar();
+    }
+
+    @Override
+    public  void hideProgressBar() {
+        this.mView.hideProgressBar();
     }
 
     @Override
@@ -81,7 +113,24 @@ public class FormPostPresenter implements Base.Presenter, FormPostContract.Prese
         } else {
 
             Post post = new Post(selectedUser, title, body);
-            this.mPostBusinnes.save(post);
+
+            showProgressBar();
+
+            OnBindDataListener<Boolean> listener = new OnBindDataListener<Boolean>() {
+                @Override
+                public void onBind(Boolean data) {
+                    if (data) {
+                        Toast.makeText(
+                                mView.getContext(),
+                                R.string.post_add_sucesso,
+                                Toast.LENGTH_LONG
+                        ).show();
+                        onBackPressed();
+                    }
+                }
+            };
+
+            this.mPostBusinnes.save(post, listener);
         }
     }
 

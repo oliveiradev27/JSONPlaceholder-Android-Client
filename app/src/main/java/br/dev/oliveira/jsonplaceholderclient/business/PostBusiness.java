@@ -1,6 +1,7 @@
 package br.dev.oliveira.jsonplaceholderclient.business;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -27,31 +28,6 @@ public class PostBusiness {
         this.mPresenter = presenter;
     }
 
-    public void get(final Post post) {
-
-        OnResponseRequestListener listener = new OnResponseRequestListener() {
-            @Override
-            public void onSuccess(String result) {
-
-                Post p = new Gson().fromJson(result, Post.class);
-                post.setId(p.getId());
-                post.setTitle(p.getTitle());
-                post.setBody(p.getBody());
-                post.setUserId(p.getUserId());
-
-            }
-
-            @Override
-            public void onError(VolleyError error) {
-
-                mPresenter.showMessageDialog(R.string.ocorreu_um_erro, R.string.erro_posts_get);
-
-            }
-        };
-
-        HttpRequest.doGet(NetworkConstants.ENDPOINT.POST_GET + post.getId(), listener);
-
-    }
 
     public void get(@NonNull Integer id, final OnBindDataListener<Post> bindDataListener) {
 
@@ -77,8 +53,7 @@ public class PostBusiness {
 
     }
 
-
-    public void get(final List<Post> posts) {
+    public void get(@NonNull  final OnBindDataListener<List<Post>> onBindDataListener) {
 
         OnResponseRequestListener listener = new OnResponseRequestListener() {
             @Override
@@ -87,8 +62,7 @@ public class PostBusiness {
                 Type listType = new TypeToken<ArrayList<Post>>() {
                 }.getType();
                 List<Post> list = new Gson().fromJson(result, listType);
-                posts.clear();
-                posts.addAll(list);
+                onBindDataListener.onBind(list);
             }
 
             @Override
@@ -103,13 +77,16 @@ public class PostBusiness {
 
     }
 
-    public void save(final Post post) {
+    public void save(final Post post, final OnBindDataListener<Boolean> onBindDataListener) {
 
-        OnResponseRequestListener listener = new OnResponseRequestListener() {
+        final OnResponseRequestListener listener = new OnResponseRequestListener() {
             @Override
             public void onSuccess(String result) {
-                Post p = new Gson().fromJson(result, Post.class);
-                post.setId(p.getId());
+                //Post p = new Gson().fromJson(result, Post.class);
+                //post.setId(p.getId());
+                Log.d("JSONPlaceholder", result);
+                onBindDataListener.onBind(true);
+
                 mPresenter.showMessageDialog(
                         R.string.mensagem_do_sistema,
                         R.string.post_add_sucesso
@@ -119,17 +96,21 @@ public class PostBusiness {
 
             @Override
             public void onError(VolleyError error) {
+                onBindDataListener.onBind(false);
                 mPresenter.showMessageDialog(R.string.ocorreu_um_erro, R.string.erro_save_post);
             }
         };
 
-        if (post.getId().toString().isEmpty()) {
+        if (post.getId() == 0) {
+            Log.d("JSONPlaceholder", "POST");
             HttpRequest.doPost(
                     NetworkConstants.ENDPOINT.POST_POST,
                     new Gson().toJson(post),
                     listener
             );
+
         } else {
+            Log.d("JSONPlaceholder", "PUT");
             HttpRequest.doPut(
                     NetworkConstants.ENDPOINT.POST_PUT + post.getId(),
                     new Gson().toJson(post),

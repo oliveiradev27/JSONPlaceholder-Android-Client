@@ -47,7 +47,7 @@ public class UserBusinnes {
     }
 
 
-    public void get(final List<User> users) {
+    public void get(final OnBindDataListener<List<User>> onBindDataListener) {
 
 
         OnResponseRequestListener listener = new OnResponseRequestListener() {
@@ -55,10 +55,8 @@ public class UserBusinnes {
             public void onSuccess(String result) {
                 Type listType = new TypeToken<ArrayList<User>>() {
                 }.getType();
-                List<User> list = new Gson().fromJson(result, listType);
-                users.clear();
-                users.addAll(list);
-                users.get(0);
+                List<User> users = new Gson().fromJson(result, listType);
+                onBindDataListener.onBind(users);
             }
 
             @Override
@@ -71,30 +69,5 @@ public class UserBusinnes {
 
     }
 
-    public void getUsernames (final List<String> usernames) {
-
-
-        OnResponseRequestListener listener = new OnResponseRequestListener() {
-            @Override
-            public void onSuccess(String result) {
-                Type listType = new TypeToken<ArrayList<User>>() {
-                }.getType();
-                List<User> list = new Gson().fromJson(result, listType);
-                usernames.clear();
-
-                for (User user : list) {
-                    usernames.add(user.getName());
-                }
-            }
-
-            @Override
-            public void onError(VolleyError error) {
-                mPresenter.showMessageDialog(R.string.ocorreu_um_erro, R.string.erro_users_get);
-            }
-        };
-
-        HttpRequest.doGet(NetworkConstants.ENDPOINT.USERS_GET, listener);
-
-    }
 
 }

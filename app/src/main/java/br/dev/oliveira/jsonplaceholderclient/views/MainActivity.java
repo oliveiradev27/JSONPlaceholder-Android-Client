@@ -1,5 +1,6 @@
 package br.dev.oliveira.jsonplaceholderclient.views;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity
     private PostsListAdapter adapter;
     private PostsContract.Presenter mPresenter;
     private List<Post> mPosts = new ArrayList<>();
+    private ProgressDialog mDialog;
 
 
     @Override
@@ -155,12 +157,18 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void showProgressBar() {
-
+        if (mDialog == null || !mDialog.isShowing()) {
+            mDialog = new ProgressDialog(this);
+            mDialog.setTitle(R.string.mensagem_do_sistema);
+            mDialog.setMessage(getString(R.string.carregando));
+            mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            mDialog.show();
+        }
     }
 
     @Override
     public void hideProgressBar() {
-
+        mDialog.dismiss();
     }
 
     @Override

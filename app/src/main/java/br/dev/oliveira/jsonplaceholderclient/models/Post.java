@@ -8,11 +8,14 @@ public class Post {
     private String  body;
 
     public Post (){
+        this.setId(0);
+        this.setUserId(0);
         this.setTitle("");
         this.setBody("");
     }
 
     public Post (Integer userId, String title, String body) {
+        this.setId(0);
         this.setUserId(userId);
         this.setTitle(title);
         this.setBody(body);

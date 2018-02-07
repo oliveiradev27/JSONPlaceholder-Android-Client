@@ -29,5 +29,7 @@
     <string name="confirma_a_exclusao">Confirma a exclusão?</string>
     <string name="excluido_com_sucesso">Excluido com sucesso!</string>
     <string name="carregando">Carregando..</string>
+    <string name="id_obrigatorio">Id do usuário é obrigátorio!</string>
+    <string name="editar">Editar</string>
 
 </resources>

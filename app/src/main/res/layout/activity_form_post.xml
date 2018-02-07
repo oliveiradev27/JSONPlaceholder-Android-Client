@@ -35,8 +35,8 @@
         <Spinner
             android:id="@+id/spinner_users"
             android:layout_width="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,23 +62,23 @@
         <Button
             android:id="@+id/button_cancel"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
             android:background="@drawable/button_radius_primary_light"
             android:padding="10dp"
             android:text="@string/cancelar"
             android:textColor="#FFF"
-            android:layout_margin="5dp"
             android:textStyle="bold"/>
 
         <Button
             android:id="@+id/button_save_post"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
             android:background="@drawable/button_radius_primary_inverse"
             android:padding="10dp"
-            android:layout_margin="5dp"
             android:text="@string/salvar"
             android:textColor="#FFF"
             android:textStyle="bold"/>

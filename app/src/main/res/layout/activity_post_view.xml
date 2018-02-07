@@ -18,7 +18,6 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:padding="10sp"
-            android:text="@string/nome_do_post"
             android:textSize="20sp"/>
 
         <View
@@ -41,7 +40,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="13sp"/>
-
 
     </LinearLayout>
 </ScrollView>
