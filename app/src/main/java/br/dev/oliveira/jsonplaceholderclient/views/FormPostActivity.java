@@ -6,13 +6,11 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +38,10 @@ public class FormPostActivity extends AppCompatActivity
 
         this.mPresenter.getUsers();
 
-        this.mViewHolder.mEditTitle    = findViewById(R.id.edit_title);
-        this.mViewHolder.mEditBody     = findViewById(R.id.edit_body);
+        this.mViewHolder.mEditTitle = findViewById(R.id.edit_title);
+        this.mViewHolder.mEditBody = findViewById(R.id.edit_body);
         this.mViewHolder.mSpinnerUsers = findViewById(R.id.spinner_users);
-        this.mViewHolder.mButtonSave   = findViewById(R.id.button_save_post);
+        this.mViewHolder.mButtonSave = findViewById(R.id.button_save_post);
         this.mViewHolder.mButtonCancel = findViewById(R.id.button_cancel);
 
         this.setListeners();
@@ -147,7 +145,8 @@ public class FormPostActivity extends AppCompatActivity
         this.mViewHolder.mSpinnerUsers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mPresenter.setUserIdByPosition(position);
+                if (position != 0)
+                    mPresenter.setUserIdByPosition(position);
             }
 
             @Override
@@ -157,7 +156,7 @@ public class FormPostActivity extends AppCompatActivity
         });
     }
 
-    public void setAdapterUsers () {
+    public void setAdapterUsers() {
         this.mAdapterUsers = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_dropdown_item,

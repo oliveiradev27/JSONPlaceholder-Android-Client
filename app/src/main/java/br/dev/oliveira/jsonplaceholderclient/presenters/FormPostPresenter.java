@@ -67,7 +67,7 @@ public class FormPostPresenter implements Base.Presenter, FormPostContract.Prese
     public void fillListUsername() {
 
         this.mView.getListUsernames().clear();
-
+        this.mView.getListUsernames().add("");
         for (User user : this.mListUsers) {
             this.mView.getListUsernames().add(user.getName());
         }
