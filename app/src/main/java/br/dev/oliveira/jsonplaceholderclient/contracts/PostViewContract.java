@@ -15,6 +15,7 @@ public interface PostViewContract {
         void setPostData();
         void setUsername(String username);
         void getPost();
+        void goToPostForm();
         Context getContext();
 
     }
@@ -26,5 +27,6 @@ public interface PostViewContract {
         void hideProgressBar();
         void getPost(Post post);
         void setData();
+        void goToPostForm();
     }
 }

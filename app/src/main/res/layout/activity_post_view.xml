@@ -41,5 +41,17 @@
             android:layout_marginTop="10dp"
             android:textSize="13sp"/>
 
+        <Button
+            android:id="@+id/button_save_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/button_radius_primary_inverse"
+            android:text="@string/alterar"
+            android:textColor="#FFF"
+            android:textStyle="bold"
+            />
+
     </LinearLayout>
 </ScrollView>

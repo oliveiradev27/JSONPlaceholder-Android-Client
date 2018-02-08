@@ -31,5 +31,7 @@
     <string name="carregando">Carregando..</string>
     <string name="id_obrigatorio">Id do usuário é obrigátorio!</string>
     <string name="editar">Editar</string>
+    <string name="alterar">Alterar</string>
+    <string name="salvo_com_sucesso">Salvo com sucesso!</string>
 
 </resources>

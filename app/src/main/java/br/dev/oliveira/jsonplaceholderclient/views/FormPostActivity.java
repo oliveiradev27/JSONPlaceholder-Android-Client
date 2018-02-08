@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.dev.oliveira.jsonplaceholderclient.R;
+import br.dev.oliveira.jsonplaceholderclient.constants.PostConstants;
 import br.dev.oliveira.jsonplaceholderclient.contracts.FormPostContract;
+import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.presenters.FormPostPresenter;
 
 public class FormPostActivity extends AppCompatActivity
@@ -51,6 +53,7 @@ public class FormPostActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         this.fillListUsername();
+        this.getPost();
     }
 
     @Override
@@ -125,7 +128,10 @@ public class FormPostActivity extends AppCompatActivity
 
     @Override
     public void hideProgressBar() {
-        mDialog.dismiss();
+
+        if (mDialog != null && mDialog.isShowing())
+            mDialog.dismiss();
+
     }
 
     @Override
@@ -138,6 +144,18 @@ public class FormPostActivity extends AppCompatActivity
 
     }
 
+
+    @Override
+    public void bindPostData(Post post) {
+        this.mViewHolder.mSpinnerUsers.setSelection(mPresenter.getPositionByUserId(post.getUserId()));
+        this.mViewHolder.mEditTitle.setText(post.getTitle());
+        this.mViewHolder.mEditBody.setText(post.getBody());
+    }
+
+    @Override
+    public void getPost() {
+        this.mPresenter.getPost();
+    }
 
     private void setListeners() {
         this.mViewHolder.mButtonSave.setOnClickListener(this);
@@ -155,6 +173,11 @@ public class FormPostActivity extends AppCompatActivity
             }
         });
     }
+
+    public Integer getPostId() {
+        return getIntent().getIntExtra(PostConstants.ATTRIBUTES.ID, 0);
+    }
+
 
     public void setAdapterUsers() {
         this.mAdapterUsers = new ArrayAdapter<>(

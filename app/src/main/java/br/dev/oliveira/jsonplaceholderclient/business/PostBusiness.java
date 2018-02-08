@@ -86,12 +86,6 @@ public class PostBusiness {
                 //post.setId(p.getId());
                 Log.d("JSONPlaceholder", result);
                 onBindDataListener.onBind(true);
-
-                mPresenter.showMessageDialog(
-                        R.string.mensagem_do_sistema,
-                        R.string.post_add_sucesso
-                );
-
             }
 
             @Override

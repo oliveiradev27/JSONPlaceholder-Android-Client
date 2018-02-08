@@ -64,6 +64,40 @@ public class FormPostPresenter implements Base.Presenter, FormPostContract.Prese
     }
 
     @Override
+    public int getPositionByUserId(int userId) {
+
+        for (int i = 0; i < mListUsers.size(); i++) {
+            User user = mListUsers.get(i);
+            if (user.getId() == userId) {
+                return i;
+            }
+        }
+        return 0;
+
+    }
+
+
+    @Override
+    public void getPost() {
+
+        Integer postId = mView.getPostId();
+        if (postId != 0) {
+            mView.showProgressBar();
+
+            OnBindDataListener<Post> listener = new OnBindDataListener<Post>() {
+                @Override
+                public void onBind(Post data) {
+                    selectedUser =  data.getUserId();
+                    mView.bindPostData(data);
+                    hideProgressBar();
+                }
+            };
+
+            this.mPostBusinnes.get(postId, listener);
+        }
+    }
+
+    @Override
     public void fillListUsername() {
 
         this.mView.getListUsernames().clear();
@@ -112,7 +146,7 @@ public class FormPostPresenter implements Base.Presenter, FormPostContract.Prese
 
         } else {
 
-            Post post = new Post(selectedUser, title, body);
+            Post post = new Post(mView.getPostId(), selectedUser, title, body);
 
             showProgressBar();
 
@@ -122,7 +156,7 @@ public class FormPostPresenter implements Base.Presenter, FormPostContract.Prese
                     if (data) {
                         Toast.makeText(
                                 mView.getContext(),
-                                R.string.post_add_sucesso,
+                                R.string.salvo_com_sucesso,
                                 Toast.LENGTH_LONG
                         ).show();
                         onBackPressed();

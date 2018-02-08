@@ -21,6 +21,13 @@ public class Post {
         this.setBody(body);
     }
 
+    public Post(Integer id, Integer userId, String title, String body) {
+        this.setId(id);
+        this.setUserId(userId);
+        this.setTitle(title);
+        this.setBody(body);
+    }
+
     public Integer getId() {
         return id;
     }

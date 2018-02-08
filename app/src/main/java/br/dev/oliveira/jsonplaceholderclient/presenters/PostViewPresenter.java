@@ -70,8 +70,11 @@ public class PostViewPresenter implements
 
         }
 
+    }
 
-
+    @Override
+    public void goToPostForm() {
+        this.mView.goToPostForm();
     }
 
     private void getUser(Integer userId) {

@@ -20,15 +20,12 @@ import br.dev.oliveira.jsonplaceholderclient.listeners.OnResponseRequestListener
 
 public class HttpRequest {
 
-    private static HttpRequest mHttpRequest;
     private static RequestQueue mRequestQueue;
-    private static Context mContext;
 
     private HttpRequest() {
     }
 
     public static void initialize(Context context) {
-        mContext = context;
         if (mRequestQueue == null)
             mRequestQueue = Volley.newRequestQueue(context);
     }

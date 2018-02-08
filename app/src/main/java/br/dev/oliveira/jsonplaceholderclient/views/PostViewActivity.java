@@ -2,9 +2,12 @@ package br.dev.oliveira.jsonplaceholderclient.views;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import br.dev.oliveira.jsonplaceholderclient.R;
@@ -13,7 +16,10 @@ import br.dev.oliveira.jsonplaceholderclient.contracts.PostViewContract;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.presenters.PostViewPresenter;
 
-public class PostViewActivity extends AppCompatActivity implements PostViewContract.View {
+public class PostViewActivity extends AppCompatActivity
+        implements
+        PostViewContract.View,
+        View.OnClickListener {
 
     private PostViewContract.Presenter mPresenter;
     private Post post;
@@ -30,8 +36,11 @@ public class PostViewActivity extends AppCompatActivity implements PostViewContr
 
 
         this.mViewHolder.textPostTitle = findViewById(R.id.text_post_title);
-        this.mViewHolder.textPostBody  = findViewById(R.id.text_post_body);
-        this.mViewHolder.textPostUser  = findViewById(R.id.text_post_user);
+        this.mViewHolder.textPostBody = findViewById(R.id.text_post_body);
+        this.mViewHolder.textPostUser = findViewById(R.id.text_post_user);
+        this.mViewHolder.buttonSavePost = findViewById(R.id.button_save_post);
+
+        this.mViewHolder.buttonSavePost.setOnClickListener(this);
     }
 
     @Override
@@ -93,11 +102,29 @@ public class PostViewActivity extends AppCompatActivity implements PostViewContr
 
     }
 
+    @Override
+    public void goToPostForm() {
+        Intent intent = new Intent(this, FormPostActivity.class);
+        intent.putExtra(PostConstants.ATTRIBUTES.ID, getPostId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.button_save_post) {
+            this.mPresenter.goToPostForm();
+        }
+    }
+
     public Integer getPostId() {
         return getIntent().getIntExtra(PostConstants.ATTRIBUTES.ID, 0);
     }
 
+
+
+
     private static class ViewHolder {
         TextView textPostTitle, textPostBody, textPostUser;
+        Button buttonSavePost;
     }
 }
