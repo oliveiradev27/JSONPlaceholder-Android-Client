@@ -37,13 +37,12 @@ public class FormPostActivity extends AppCompatActivity
         setContentView(R.layout.activity_form_post);
 
         this.mPresenter = new FormPostPresenter(this);
+        this.getPost();
 
-        this.mPresenter.getUsers();
-
-        this.mViewHolder.mEditTitle = findViewById(R.id.edit_title);
-        this.mViewHolder.mEditBody = findViewById(R.id.edit_body);
+        this.mViewHolder.mEditTitle    = findViewById(R.id.edit_title);
+        this.mViewHolder.mEditBody     = findViewById(R.id.edit_body);
         this.mViewHolder.mSpinnerUsers = findViewById(R.id.spinner_users);
-        this.mViewHolder.mButtonSave = findViewById(R.id.button_save_post);
+        this.mViewHolder.mButtonSave   = findViewById(R.id.button_save_post);
         this.mViewHolder.mButtonCancel = findViewById(R.id.button_cancel);
 
         this.setListeners();
@@ -52,8 +51,8 @@ public class FormPostActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        this.fillListUsername();
-        this.getPost();
+        this.mPresenter.getUsers();
+
     }
 
     @Override

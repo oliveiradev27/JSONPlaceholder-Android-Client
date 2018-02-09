@@ -15,7 +15,6 @@ import br.dev.oliveira.jsonplaceholderclient.listeners.OnBindDataListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.models.User;
 import br.dev.oliveira.jsonplaceholderclient.utils.infra.NetworkUtils;
-import br.dev.oliveira.jsonplaceholderclient.views.FormPostActivity;
 
 public class FormPostPresenter implements Base.Presenter, FormPostContract.Presenter {
 
@@ -24,6 +23,7 @@ public class FormPostPresenter implements Base.Presenter, FormPostContract.Prese
     private UserBusinnes mUserBusinnes;
     private List<User> mListUsers = new ArrayList<>();
     private Integer selectedUser = 0;
+    private Post mPost;
 
     public FormPostPresenter(FormPostContract.View view) {
         this.mView = view;
@@ -60,7 +60,7 @@ public class FormPostPresenter implements Base.Presenter, FormPostContract.Prese
 
     @Override
     public void setUserIdByPosition(int position) {
-        selectedUser =  mListUsers.get(position).getId();
+        selectedUser = mListUsers.get(position).getId();
     }
 
     @Override
@@ -87,8 +87,8 @@ public class FormPostPresenter implements Base.Presenter, FormPostContract.Prese
             OnBindDataListener<Post> listener = new OnBindDataListener<Post>() {
                 @Override
                 public void onBind(Post data) {
-                    selectedUser =  data.getUserId();
-                    mView.bindPostData(data);
+                    selectedUser = data.getUserId();
+                    mPost = data;
                     hideProgressBar();
                 }
             };
@@ -99,14 +99,16 @@ public class FormPostPresenter implements Base.Presenter, FormPostContract.Prese
 
     @Override
     public void fillListUsername() {
-
         this.mView.getListUsernames().clear();
-        this.mView.getListUsernames().add("");
+        if (selectedUser == 0)
+            this.mView.getListUsernames().add("");
         for (User user : this.mListUsers) {
             this.mView.getListUsernames().add(user.getName());
         }
 
         this.mView.setAdapterUsers();
+        this.mView.bindPostData(mPost);
+
     }
 
     @Override
@@ -120,12 +122,12 @@ public class FormPostPresenter implements Base.Presenter, FormPostContract.Prese
     }
 
     @Override
-    public  void hideProgressBar() {
+    public void hideProgressBar() {
         this.mView.hideProgressBar();
     }
 
     @Override
-    public void save(String title, String body) {
+    public void save(final String title, String body) {
 
         if (!NetworkUtils.hasInternet(mView.getContext())) {
             this.mView.showMessageDialog(R.string.ocorreu_um_erro, R.string.internet_indisponivel);
@@ -154,12 +156,8 @@ public class FormPostPresenter implements Base.Presenter, FormPostContract.Prese
                 @Override
                 public void onBind(Boolean data) {
                     if (data) {
-                        Toast.makeText(
-                                mView.getContext(),
-                                R.string.salvo_com_sucesso,
-                                Toast.LENGTH_LONG
-                        ).show();
-                        onBackPressed();
+                        hideProgressBar();
+                        showMessageDialog(R.string.mensagem_do_sistema, R.string.salvo_com_sucesso);
                     }
                 }
             };
