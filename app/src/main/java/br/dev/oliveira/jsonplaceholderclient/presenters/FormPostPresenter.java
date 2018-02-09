@@ -100,15 +100,20 @@ public class FormPostPresenter implements Base.Presenter, FormPostContract.Prese
     @Override
     public void fillListUsername() {
         this.mView.getListUsernames().clear();
-        if (selectedUser == 0)
+
+        if (selectedUser == 0) {
             this.mView.getListUsernames().add("");
+        }
+
         for (User user : this.mListUsers) {
             this.mView.getListUsernames().add(user.getName());
         }
 
         this.mView.setAdapterUsers();
-        this.mView.bindPostData(mPost);
 
+        if (selectedUser != 0) {
+            this.mView.bindPostData(mPost);
+        }
     }
 
     @Override

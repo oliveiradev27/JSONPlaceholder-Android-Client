@@ -107,6 +107,7 @@ public class PostViewActivity extends AppCompatActivity
         Intent intent = new Intent(this, FormPostActivity.class);
         intent.putExtra(PostConstants.ATTRIBUTES.ID, getPostId());
         startActivity(intent);
+        finish();
     }
 
     @Override
