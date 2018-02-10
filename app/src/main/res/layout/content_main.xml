@@ -26,6 +26,12 @@
         android:background="@color/colorDivider"
         android:layout_marginBottom="10dp"/>
 
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/progress_posts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_posts"
         android:paddingStart="10dp"

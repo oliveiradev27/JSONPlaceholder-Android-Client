@@ -48,8 +48,8 @@ public class HttpRequest {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
                 listener.onError(error);
+                error.printStackTrace();
             }
         }) {
             @Override
@@ -85,8 +85,9 @@ public class HttpRequest {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
                 listener.onError(error);
+                error.printStackTrace();
+
             }
         });
 
@@ -110,8 +111,9 @@ public class HttpRequest {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
                 listener.onError(error);
+                error.printStackTrace();
+
             }
         }) {
             @Override
@@ -145,8 +147,9 @@ public class HttpRequest {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
                 listener.onError(error);
+                error.printStackTrace();
+
             }
         });
 

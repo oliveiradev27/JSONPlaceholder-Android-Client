@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ import br.dev.oliveira.jsonplaceholderclient.contracts.PostsContract;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnListClickInteractionListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.presenters.PostsPresenter;
+import br.dev.oliveira.jsonplaceholderclient.utils.network.HttpRequest;
 
 public class MainActivity extends AppCompatActivity
         implements  NavigationView.OnNavigationItemSelectedListener,
@@ -40,12 +42,14 @@ public class MainActivity extends AppCompatActivity
     private PostsListAdapter adapter;
     private PostsContract.Presenter mPresenter;
     private List<Post> mPosts = new ArrayList<>();
-    private ProgressDialog mDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+        this.mPresenter = new PostsPresenter(this);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -59,7 +63,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        this.mPresenter = new PostsPresenter(this);
 
         // registrando receiver que captura a mudança de conexão
         /*registerReceiver(
@@ -69,8 +72,8 @@ public class MainActivity extends AppCompatActivity
         );*/
 
         this.mViewHolder.linearContent = findViewById(R.id.linear_content);
-
         this.mViewHolder.fab = findViewById(R.id.fab);
+        this.mViewHolder.mProgressPosts = findViewById(R.id.progress_posts);
         // Capturando recycler view
         this.mViewHolder.mRecyclerPosts = findViewById(R.id.recycler_posts);
 
@@ -102,9 +105,10 @@ public class MainActivity extends AppCompatActivity
         };
 
         adapter = new PostsListAdapter(this, this.mPosts, listener);
+        adapter.notifyDataSetChanged();
+
         this.mViewHolder.mRecyclerPosts.setAdapter(adapter);
 
-        adapter.notifyDataSetChanged();
 
         this.setListeners();
     }
@@ -123,11 +127,6 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         this.getPosts();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -162,18 +161,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void showProgressBar() {
-        if (mDialog == null || !mDialog.isShowing()) {
-            mDialog = new ProgressDialog(this);
-            mDialog.setTitle(R.string.mensagem_do_sistema);
-            mDialog.setMessage(getString(R.string.carregando));
-            mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            mDialog.show();
-        }
+        this.mViewHolder.mProgressPosts.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgressBar() {
-        mDialog.dismiss();
+        this.mViewHolder.mProgressPosts.setVisibility(View.GONE);
     }
 
     @Override
@@ -231,5 +224,6 @@ public class MainActivity extends AppCompatActivity
         FloatingActionButton fab;
         Snackbar mSnackbar;
         LinearLayout linearContent;
+        ProgressBar mProgressPosts;
     }
 }
