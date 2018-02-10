@@ -1,6 +1,8 @@
 package br.dev.oliveira.jsonplaceholderclient.models;
 
-public class Company {
+import java.io.Serializable;
+
+public class Company implements Serializable {
     private String name, catchPhrase, bs;
 
     public String getName() {

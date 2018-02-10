@@ -1,6 +1,8 @@
 package br.dev.oliveira.jsonplaceholderclient.models;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
     private String street, suite, city, zipcode;
     private Geo geo;
 

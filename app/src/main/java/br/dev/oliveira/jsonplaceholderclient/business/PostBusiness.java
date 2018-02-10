@@ -67,7 +67,7 @@ public class PostBusiness {
 
             @Override
             public void onError(VolleyError error) {
-
+                error.printStackTrace();
                 mPresenter.showMessageDialog(R.string.ocorreu_um_erro, R.string.erro_posts_get);
 
             }

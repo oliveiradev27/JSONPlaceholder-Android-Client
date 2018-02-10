@@ -1,6 +1,8 @@
 package br.dev.oliveira.jsonplaceholderclient.models;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private Integer id;
     private String name, username, email, website, phone;

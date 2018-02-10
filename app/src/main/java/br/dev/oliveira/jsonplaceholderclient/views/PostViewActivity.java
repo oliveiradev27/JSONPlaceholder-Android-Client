@@ -121,9 +121,6 @@ public class PostViewActivity extends AppCompatActivity
         return getIntent().getIntExtra(PostConstants.ATTRIBUTES.ID, 0);
     }
 
-
-
-
     private static class ViewHolder {
         TextView textPostTitle, textPostBody, textPostUser;
         Button buttonSavePost;

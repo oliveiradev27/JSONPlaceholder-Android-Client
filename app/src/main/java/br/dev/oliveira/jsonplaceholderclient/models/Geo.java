@@ -1,7 +1,9 @@
 package br.dev.oliveira.jsonplaceholderclient.models;
 
 
-public class Geo {
+import java.io.Serializable;
+
+public class Geo implements Serializable {
     private Float lat, lng;
 
     public Float getLat() {

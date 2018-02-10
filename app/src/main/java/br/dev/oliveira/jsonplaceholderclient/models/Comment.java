@@ -1,6 +1,8 @@
 package br.dev.oliveira.jsonplaceholderclient.models;
 
-public class Comment {
+import java.io.Serializable;
+
+public class Comment implements Serializable {
 
     private Integer id, postId;
     private String  name, email, body;

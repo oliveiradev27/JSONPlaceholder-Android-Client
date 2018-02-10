@@ -1,7 +1,9 @@
 package br.dev.oliveira.jsonplaceholderclient.models;
 
 
-public class Post {
+import java.io.Serializable;
+
+public class Post implements Serializable {
     private Integer id;
     private Integer userId;
     private String  title;

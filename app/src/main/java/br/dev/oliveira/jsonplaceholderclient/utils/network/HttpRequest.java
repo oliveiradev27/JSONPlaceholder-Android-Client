@@ -11,8 +11,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 
 import br.dev.oliveira.jsonplaceholderclient.constants.NetworkConstants;
@@ -50,6 +48,7 @@ public class HttpRequest {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
                 listener.onError(error);
             }
         }) {
@@ -86,6 +85,7 @@ public class HttpRequest {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
                 listener.onError(error);
             }
         });
@@ -110,6 +110,7 @@ public class HttpRequest {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
                 listener.onError(error);
             }
         }) {
@@ -144,6 +145,7 @@ public class HttpRequest {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
                 listener.onError(error);
             }
         });
