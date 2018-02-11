@@ -1,12 +1,14 @@
 package br.dev.oliveira.jsonplaceholderclient.views;
 
-import android.app.ProgressDialog;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -31,12 +34,11 @@ import br.dev.oliveira.jsonplaceholderclient.contracts.PostsContract;
 import br.dev.oliveira.jsonplaceholderclient.listeners.OnListClickInteractionListener;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.presenters.PostsPresenter;
-import br.dev.oliveira.jsonplaceholderclient.utils.network.HttpRequest;
 
 public class MainActivity extends AppCompatActivity
-        implements  NavigationView.OnNavigationItemSelectedListener,
-                    View.OnClickListener,
-                    PostsContract.View {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener,
+        PostsContract.View {
 
     private ViewHolder mViewHolder = new ViewHolder();
     private PostsListAdapter adapter;
@@ -63,24 +65,27 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-        // registrando receiver que captura a mudança de conexão
-        /*registerReceiver(
-                new ConnectivityChangeReceiver(),
-                new IntentFilter(
-                        ConnectivityManager.CONNECTIVITY_ACTION)
-        );*/
-
-        this.mViewHolder.linearContent = findViewById(R.id.linear_content);
         this.mViewHolder.fab = findViewById(R.id.fab);
-        this.mViewHolder.mProgressPosts = findViewById(R.id.progress_posts);
-        // Capturando recycler view
-        this.mViewHolder.mRecyclerPosts = findViewById(R.id.recycler_posts);
 
-        // Setando o layout manager do recyclerview
-        this.mViewHolder.mRecyclerPosts.setLayoutManager(
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        );
+        if (findViewById(R.id.linear_content_two_collumns) != null) {
+
+            Fragment fragment = PostContentFragment.newInstance(0);
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction()
+                    .replace(R.id.frame_post_content, fragment, "post_content")
+                    .commit();
+
+        } else {
+
+            this.mViewHolder.linearContent = findViewById(R.id.linear_content);
+            this.mViewHolder.mProgressPosts = findViewById(R.id.progress_posts);
+            // Capturando recycler view
+            this.mViewHolder.mRecyclerPosts = findViewById(R.id.recycler_posts);
+
+            // Setando o layout manager do recyclerview
+            this.mViewHolder.mRecyclerPosts.setLayoutManager(
+                    new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            );
 
         /* Adapter
             O adapter recebe  o contexto da activity
@@ -91,26 +96,27 @@ public class MainActivity extends AppCompatActivity
             onClickShow() e onClickDelete() que serão acionado nos clicks dos respectivos
             botões
         */
-        OnListClickInteractionListener listener = new OnListClickInteractionListener() {
-            @Override
-            public void onClickShow(Integer postId) {
-                MainActivity.this.mPresenter.goToPagePost(postId);
-            }
+            OnListClickInteractionListener listener = new OnListClickInteractionListener() {
+                @Override
+                public void onClickShow(Integer postId) {
+                    MainActivity.this.mPresenter.goToPagePost(postId);
+                }
 
-            @Override
+                @Override
 
-            public void onClickDelete(Integer postId) {
-                MainActivity.this.mPresenter.showConfirmAction(postId);
-            }
-        };
+                public void onClickDelete(Integer postId) {
+                    MainActivity.this.mPresenter.showConfirmAction(postId);
+                }
+            };
 
-        adapter = new PostsListAdapter(this, this.mPosts, listener);
-        adapter.notifyDataSetChanged();
+            adapter = new PostsListAdapter(this, this.mPosts, listener);
+            adapter.notifyDataSetChanged();
 
-        this.mViewHolder.mRecyclerPosts.setAdapter(adapter);
+            this.mViewHolder.mRecyclerPosts.setAdapter(adapter);
 
-
-        this.setListeners();
+            this.setListeners();
+            this.getPosts();
+        }
     }
 
     @Override
@@ -126,7 +132,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        this.getPosts();
     }
 
     @Override
@@ -215,7 +220,7 @@ public class MainActivity extends AppCompatActivity
         if (v.getId() == R.id.fab) this.mPresenter.goToPostForm(null);
     }
 
-    private void setListeners () {
+    private void setListeners() {
         this.mViewHolder.fab.setOnClickListener(this);
     }
 

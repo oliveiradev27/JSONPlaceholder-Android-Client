@@ -11,6 +11,14 @@ import br.dev.oliveira.jsonplaceholderclient.R;
 
 public class ConnectivityChangeReceiver extends BroadcastReceiver {
 
+    // registrando receiver que captura a mudança de conexão em uma activity
+        /*registerReceiver(
+                new ConnectivityChangeReceiver(),
+                new IntentFilter(
+                        ConnectivityManager.CONNECTIVITY_ACTION)
+        );*/
+
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("RECEIVER", "action: " + intent.getAction());

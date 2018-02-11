@@ -47,6 +47,9 @@ public class PostViewPresenter implements
     @Override
     public void getPost(final Post post) {
 
+        if (post.getId() == 0)
+            return;
+
         if (NetworkUtils.hasInternet(mView.getContext())) {
             this.mView.showProgressBar();
 
@@ -66,8 +69,7 @@ public class PostViewPresenter implements
             };
 
             this.mPostBusiness.get(post.getId(), listener);
-            this.getUser(post.getUserId());
-
+            // this.getUser(post.getUserId());
         }
 
     }
