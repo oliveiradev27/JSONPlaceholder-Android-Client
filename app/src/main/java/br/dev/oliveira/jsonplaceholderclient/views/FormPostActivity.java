@@ -42,7 +42,7 @@ public class FormPostActivity extends AppCompatActivity
         this.mViewHolder.mEditTitle    = findViewById(R.id.edit_title);
         this.mViewHolder.mEditBody     = findViewById(R.id.edit_body);
         this.mViewHolder.mSpinnerUsers = findViewById(R.id.spinner_users);
-        this.mViewHolder.mButtonSave   = findViewById(R.id.button_save_post);
+        this.mViewHolder.mButtonSave   = findViewById(R.id.button_save);
         this.mViewHolder.mButtonCancel = findViewById(R.id.button_cancel);
 
         this.setListeners();

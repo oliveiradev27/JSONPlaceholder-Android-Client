@@ -33,8 +33,7 @@
     <string name="editar">Editar</string>
     <string name="alterar">Alterar</string>
     <string name="salvo_com_sucesso">Salvo com sucesso!</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_post_content_description">Selecione um post para ser exibido neste espaço.</string>
+    <string name="voltar">Voltar</string>
 
 </resources>

@@ -1,13 +1,12 @@
 package br.dev.oliveira.jsonplaceholderclient.views;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,9 +19,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +43,8 @@ public class MainActivity extends AppCompatActivity
     private PostsListAdapter adapter;
     private PostsContract.Presenter mPresenter;
     private List<Post> mPosts = new ArrayList<>();
+    private PostContentFragment fragment;
+    private Integer seletedId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +70,10 @@ public class MainActivity extends AppCompatActivity
 
         if (findViewById(R.id.linear_content_two_collumns) != null) {
 
-            Fragment fragment = PostContentFragment.newInstance(0);
+            fragment = PostContentFragment.newInstance(this.seletedId);
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction()
-                    .replace(R.id.frame_post_content, fragment, "post_content")
+                    .add(R.id.frame_post_content, fragment, "post_content")
                     .commit();
 
         } else {
@@ -84,7 +85,11 @@ public class MainActivity extends AppCompatActivity
 
             // Setando o layout manager do recyclerview
             this.mViewHolder.mRecyclerPosts.setLayoutManager(
-                    new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                    new LinearLayoutManager(
+                            this,
+                            LinearLayoutManager.VERTICAL,
+                            false
+                    )
             );
 
         /* Adapter

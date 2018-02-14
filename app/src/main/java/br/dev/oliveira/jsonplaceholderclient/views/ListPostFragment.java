@@ -31,30 +31,21 @@ public class ListPostFragment extends Fragment implements PostsContract.View {
     private ArrayList<Post> mPosts = new ArrayList<>();
     private ViewHolder mViewHolder = new ViewHolder();
     private RecyclerView.Adapter<PostsViewHolder> mAdapter;
+    private Integer seletedPost;
 
     private PostsContract.Presenter mPresenter;
-
-    public static ListPostFragment newInstance() {
-
-        Bundle args = new Bundle();
-
-        ListPostFragment fragment = new ListPostFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.mPresenter = new PostsPresenter(this);
+
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        this.mPresenter = new PostsPresenter(this);
         View rootView = inflater.inflate(R.layout.fragment_list_post, container, true);
 
 
@@ -74,6 +65,7 @@ public class ListPostFragment extends Fragment implements PostsContract.View {
         OnListClickInteractionListener listener = new OnListClickInteractionListener() {
             @Override
             public void onClickShow(Integer postId) {
+                ListPostFragment.this.seletedPost = postId;
                 ListPostFragment.this.mPresenter.goToPagePost(postId);
             }
 
@@ -90,6 +82,7 @@ public class ListPostFragment extends Fragment implements PostsContract.View {
         this.mViewHolder.mRecyclerPosts.setAdapter(mAdapter);
 
         return rootView;
+
     }
 
     @Override
@@ -128,6 +121,10 @@ public class ListPostFragment extends Fragment implements PostsContract.View {
 
     @Override
     public void goToPagePost(Integer id) {
+        this.setContentPost(id);
+    }
+
+    private void setContentPost(Integer id) {
         PostContentFragment fragment = PostContentFragment.newInstance(id);
         getActivity()
                 .getSupportFragmentManager()

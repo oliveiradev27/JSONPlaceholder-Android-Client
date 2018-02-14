@@ -1,5 +1,7 @@
 package br.dev.oliveira.jsonplaceholderclient.presenters;
 
+import android.util.Log;
+
 import br.dev.oliveira.jsonplaceholderclient.business.PostBusiness;
 import br.dev.oliveira.jsonplaceholderclient.business.UserBusinnes;
 import br.dev.oliveira.jsonplaceholderclient.contracts.Base;
@@ -49,6 +51,8 @@ public class PostViewPresenter implements
 
         if (post.getId() == 0)
             return;
+
+        Log.i("JSONPlaceholder", post.getId().toString());
 
         if (NetworkUtils.hasInternet(mView.getContext())) {
             this.mView.showProgressBar();

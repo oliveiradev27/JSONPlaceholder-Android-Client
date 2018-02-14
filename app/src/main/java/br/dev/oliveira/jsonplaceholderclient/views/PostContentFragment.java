@@ -27,6 +27,7 @@ public class PostContentFragment extends Fragment
     private ViewHolder mViewHolder = new ViewHolder();
     private PostViewContract.Presenter mPresenter;
     private Post mPost;
+    private String mUsername;
 
     public static PostContentFragment newInstance(Integer postId) {
 
@@ -42,22 +43,23 @@ public class PostContentFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        this.mPresenter = new PostViewPresenter(this);
-
         Bundle arguments = getArguments();
+
         this.mPost = new Post();
 
         if (arguments != null) {
             this.mPost.setId(arguments.getInt(PostConstants.ATTRIBUTES.ID, 0));
         } else {
-            this.mPost.setId(1);
+            this.mPost.setId(0);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        this.mPresenter = new PostViewPresenter(this);
+
         View rootView = inflater.inflate(
                 R.layout.fragment_post_content,
                 container,
@@ -70,11 +72,21 @@ public class PostContentFragment extends Fragment
         this.mViewHolder.mTextUsername = rootView.findViewById(R.id.text_post_user);
         this.mViewHolder.mTextTitle = rootView.findViewById(R.id.text_post_title);
         this.mViewHolder.mProgressPostContent = rootView.findViewById(R.id.progress_post_content);
-        this.mViewHolder.mImageEmptyContent = rootView.findViewById(R.id.image_empty_content);
+        this.mViewHolder.mViewTitleDivider = rootView.findViewById(R.id.view_post_title_divider);
+        this.mViewHolder.mImageEmpty = rootView.findViewById(R.id.image_empty);
 
         setListeners();
 
         return rootView;
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            this.mViewHolder.mImageEmpty.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -99,9 +111,9 @@ public class PostContentFragment extends Fragment
     @Override
     public void showProgressBar() {
 
-        this.mViewHolder.mLinearContentPost.setVisibility(View.INVISIBLE);
-        this.mViewHolder.mImageEmptyContent.setVisibility(View.INVISIBLE);
-        this.mViewHolder.mButtonSavePost.setVisibility(View.INVISIBLE);
+        this.mViewHolder.mLinearContentPost.setVisibility(View.GONE);
+        this.mViewHolder.mButtonSavePost.setVisibility(View.GONE);
+        this.mViewHolder.mImageEmpty.setVisibility(View.GONE);
 
         this.mViewHolder.mProgressPostContent.setVisibility(View.VISIBLE);
 
@@ -110,6 +122,7 @@ public class PostContentFragment extends Fragment
     @Override
     public void hideProgressBar() {
         this.mViewHolder.mProgressPostContent.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -121,8 +134,8 @@ public class PostContentFragment extends Fragment
     public void setPostData() {
 
         this.mViewHolder.mLinearContentPost.setVisibility(View.VISIBLE);
-        this.mViewHolder.mImageEmptyContent.setVisibility(View.INVISIBLE);
         this.mViewHolder.mButtonSavePost.setVisibility(View.VISIBLE);
+        this.mViewHolder.mImageEmpty.setVisibility(View.GONE);
 
         this.mViewHolder.mTextTitle.setText(this.mPost.getTitle());
         this.mViewHolder.mTextBody.setText(this.mPost.getBody());
@@ -130,6 +143,7 @@ public class PostContentFragment extends Fragment
 
     @Override
     public void setUsername(String username) {
+        this.mUsername = username;
         this.mViewHolder.mTextUsername.setText(username);
     }
 
@@ -156,11 +170,18 @@ public class PostContentFragment extends Fragment
         this.mViewHolder.mButtonSavePost.setOnClickListener(this);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(PostConstants.ATTRIBUTES.ID, this.mPost.getId());
+        super.onSaveInstanceState(outState);
+    }
+
     private static class ViewHolder {
         LinearLayout mLinearContentPost;
         TextView mTextTitle, mTextBody, mTextUsername;
         ProgressBar mProgressPostContent;
         Button mButtonSavePost;
-        ImageView mImageEmptyContent;
+        View mViewTitleDivider;
+        ImageView mImageEmpty;
     }
 }
