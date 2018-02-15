@@ -20,7 +20,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_list_play"/>
+        android:contentDescription="@string/empty_post_content_description"
+        android:minWidth="200dp"
+        android:src="@mipmap/ic_launcher_transparent"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -58,12 +60,14 @@
                 android:background="@color/colorDivider"
                 android:text="@string/usuario"
                 android:textSize="14sp"/>
+            fo
 
             <TextView
                 android:id="@+id/text_post_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:gravity="center"
                 android:textSize="16sp"/>
         </LinearLayout>
     </ScrollView>

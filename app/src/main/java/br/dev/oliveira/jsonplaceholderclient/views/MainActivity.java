@@ -3,7 +3,6 @@ package br.dev.oliveira.jsonplaceholderclient.views;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -21,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,9 +117,10 @@ public class MainActivity extends AppCompatActivity
 
             this.mViewHolder.mRecyclerPosts.setAdapter(adapter);
 
-            this.setListeners();
             this.getPosts();
         }
+
+        this.setListeners();
     }
 
     @Override

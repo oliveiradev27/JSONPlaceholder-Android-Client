@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import br.dev.oliveira.jsonplaceholderclient.R;
 import br.dev.oliveira.jsonplaceholderclient.constants.PostConstants;
+import br.dev.oliveira.jsonplaceholderclient.constants.UserConstants;
 import br.dev.oliveira.jsonplaceholderclient.contracts.PostViewContract;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.presenters.PostViewPresenter;
@@ -78,15 +79,6 @@ public class PostContentFragment extends Fragment
         setListeners();
 
         return rootView;
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-
-        if (savedInstanceState != null) {
-            this.mViewHolder.mImageEmpty.setVisibility(View.GONE);
-        }
     }
 
     @Override
@@ -168,12 +160,6 @@ public class PostContentFragment extends Fragment
 
     private void setListeners() {
         this.mViewHolder.mButtonSavePost.setOnClickListener(this);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putInt(PostConstants.ATTRIBUTES.ID, this.mPost.getId());
-        super.onSaveInstanceState(outState);
     }
 
     private static class ViewHolder {

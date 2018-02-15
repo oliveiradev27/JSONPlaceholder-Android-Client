@@ -61,4 +61,8 @@ public class Post implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public Boolean isEmpty() {
+        return title.isEmpty() && body.isEmpty() && userId == 0;
+    }
 }
