@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity
 
         this.mViewHolder.fab = findViewById(R.id.fab);
 
-        if (findViewById(R.id.linear_content_two_collumns) != null) {
+        if (findViewById(R.id.linear_content_two_collumns) != null && savedInstanceState == null) {
 
             fragment = PostContentFragment.newInstance(this.seletedId);
             FragmentManager manager = getSupportFragmentManager();

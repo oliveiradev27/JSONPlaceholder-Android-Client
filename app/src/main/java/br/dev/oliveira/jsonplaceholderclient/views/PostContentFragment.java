@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import br.dev.oliveira.jsonplaceholderclient.R;
 import br.dev.oliveira.jsonplaceholderclient.constants.PostConstants;
@@ -78,6 +79,7 @@ public class PostContentFragment extends Fragment
 
         setListeners();
 
+        setRetainInstance(true);
         return rootView;
     }
 
@@ -96,11 +98,6 @@ public class PostContentFragment extends Fragment
     }
 
     @Override
-    public void showConfirmAction(int message) {
-
-    }
-
-    @Override
     public void showProgressBar() {
 
         this.mViewHolder.mLinearContentPost.setVisibility(View.GONE);
@@ -114,7 +111,6 @@ public class PostContentFragment extends Fragment
     @Override
     public void hideProgressBar() {
         this.mViewHolder.mProgressPostContent.setVisibility(View.GONE);
-
     }
 
     @Override

@@ -60,7 +60,6 @@
                 android:background="@color/colorDivider"
                 android:text="@string/usuario"
                 android:textSize="14sp"/>
-            fo
 
             <TextView
                 android:id="@+id/text_post_body"

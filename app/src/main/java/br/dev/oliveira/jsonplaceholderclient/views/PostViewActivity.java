@@ -58,11 +58,6 @@ public class PostViewActivity extends AppCompatActivity
     }
 
     @Override
-    public void showConfirmAction(int message) {
-
-    }
-
-    @Override
     public void showProgressBar() {
         if (dialog == null || !dialog.isShowing()) {
             dialog = new ProgressDialog(this);

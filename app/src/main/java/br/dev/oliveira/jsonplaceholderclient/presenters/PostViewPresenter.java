@@ -32,11 +32,6 @@ public class PostViewPresenter implements
     }
 
     @Override
-    public void showConfirmAction(int message) {
-
-    }
-
-    @Override
     public void showProgressBar() {
 
     }

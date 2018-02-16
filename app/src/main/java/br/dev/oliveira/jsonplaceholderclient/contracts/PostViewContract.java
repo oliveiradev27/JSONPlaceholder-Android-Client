@@ -8,7 +8,6 @@ public interface PostViewContract {
 
     interface View {
         void showMessageDialog(int title, int message);
-        void showConfirmAction(int message);
         void showProgressBar();
         void hideProgressBar();
         Integer getPostId();
@@ -22,7 +21,6 @@ public interface PostViewContract {
 
     interface Presenter {
         void showMessageDialog(int title, int message);
-        void showConfirmAction(int message);
         void showProgressBar();
         void hideProgressBar();
         void getPost(Post post);
