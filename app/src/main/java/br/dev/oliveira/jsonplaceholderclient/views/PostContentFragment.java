@@ -13,11 +13,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import br.dev.oliveira.jsonplaceholderclient.R;
 import br.dev.oliveira.jsonplaceholderclient.constants.PostConstants;
-import br.dev.oliveira.jsonplaceholderclient.constants.UserConstants;
 import br.dev.oliveira.jsonplaceholderclient.contracts.PostViewContract;
 import br.dev.oliveira.jsonplaceholderclient.models.Post;
 import br.dev.oliveira.jsonplaceholderclient.presenters.PostViewPresenter;
@@ -103,6 +101,8 @@ public class PostContentFragment extends Fragment
         this.mViewHolder.mLinearContentPost.setVisibility(View.GONE);
         this.mViewHolder.mButtonSavePost.setVisibility(View.GONE);
         this.mViewHolder.mImageEmpty.setVisibility(View.GONE);
+        this.mViewHolder.mViewTitleDivider.setVisibility(View.GONE);
+
 
         this.mViewHolder.mProgressPostContent.setVisibility(View.VISIBLE);
 
@@ -123,6 +123,7 @@ public class PostContentFragment extends Fragment
 
         this.mViewHolder.mLinearContentPost.setVisibility(View.VISIBLE);
         this.mViewHolder.mButtonSavePost.setVisibility(View.VISIBLE);
+        this.mViewHolder.mViewTitleDivider.setVisibility(View.VISIBLE);
         this.mViewHolder.mImageEmpty.setVisibility(View.GONE);
 
         this.mViewHolder.mTextTitle.setText(this.mPost.getTitle());

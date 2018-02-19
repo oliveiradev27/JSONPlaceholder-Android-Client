@@ -66,14 +66,15 @@ public class MainActivity extends AppCompatActivity
 
         this.mViewHolder.fab = findViewById(R.id.fab);
 
-        if (findViewById(R.id.linear_content_two_collumns) != null && savedInstanceState == null) {
+        if (findViewById(R.id.linear_content_two_collumns) != null) {
 
-            fragment = PostContentFragment.newInstance(this.seletedId);
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction()
-                    .add(R.id.frame_post_content, fragment, "post_content")
-                    .commit();
-
+            if (savedInstanceState == null) {
+                fragment = PostContentFragment.newInstance(this.seletedId);
+                FragmentManager manager = getSupportFragmentManager();
+                manager.beginTransaction()
+                        .add(R.id.frame_post_content, fragment, "post_content")
+                        .commit();
+            }
         } else {
 
             this.mViewHolder.linearContent = findViewById(R.id.linear_content);
