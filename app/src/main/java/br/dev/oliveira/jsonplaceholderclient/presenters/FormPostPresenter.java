@@ -94,7 +94,9 @@ public class FormPostPresenter implements Base.Presenter, FormPostContract.Prese
             };
 
             this.mPostBusinnes.get(postId, listener);
+
         }
+
     }
 
     @Override

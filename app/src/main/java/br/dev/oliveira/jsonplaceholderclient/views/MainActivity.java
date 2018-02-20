@@ -1,5 +1,8 @@
 package br.dev.oliveira.jsonplaceholderclient.views;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -65,6 +69,10 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         this.mViewHolder.fab = findViewById(R.id.fab);
+
+        if (savedInstanceState == null) {
+            this.showNotification();
+        }
 
         if (findViewById(R.id.linear_content_two_collumns) != null) {
 
@@ -133,6 +141,7 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
 
     @Override
     protected void onResume() {
@@ -227,6 +236,35 @@ public class MainActivity extends AppCompatActivity
 
     private void setListeners() {
         this.mViewHolder.fab.setOnClickListener(this);
+    }
+
+    private void showNotification() {
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                this,
+                0,
+                new Intent(this, FormPostActivity.class),
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                this,
+                "add"
+        );
+
+        Notification notification = builder.setContentText("Adicione um novo post")
+                .setContentTitle("Compartilhe sua opinião")
+                .setSmallIcon(R.mipmap.ic_launcher_transparent)
+                .setContentIntent(pendingIntent)
+                .setTicker("Adicione um novo post")
+                .build();
+
+        notification.flags = NotificationCompat.FLAG_AUTO_CANCEL;
+        NotificationManager manager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (manager != null)
+            manager.notify(0, notification);
+
     }
 
     private static class ViewHolder {
