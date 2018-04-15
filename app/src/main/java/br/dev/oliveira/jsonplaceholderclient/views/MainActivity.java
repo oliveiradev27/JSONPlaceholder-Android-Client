@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +25,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,12 +51,14 @@ public class MainActivity extends AppCompatActivity
     private List<Post> mPosts = new ArrayList<>();
     private PostContentFragment fragment;
     private Integer seletedId = 0;
+    private EventBus eventBus = EventBus.getDefault();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
+        eventBus.register(this);
         this.mPresenter = new PostsPresenter(this);
 
         setContentView(R.layout.activity_main);
@@ -134,7 +140,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -172,10 +178,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void showMessageDialog(int title, int message) {
+
         new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(message)
                 .show();
+
     }
 
     @Override
@@ -190,6 +198,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void showConfirmAction(int message) {
+
         this.mViewHolder.mSnackbar = Snackbar.make(
                 this.mViewHolder.linearContent,
                 message,
@@ -198,11 +207,10 @@ public class MainActivity extends AppCompatActivity
         this.mViewHolder.mSnackbar.setAction(R.string.confirmar, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 mPresenter.delete();
-
             }
         }).show();
+
     }
 
     @Override
@@ -212,16 +220,20 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void goToPagePost(Integer id) {
+
         Intent intent = new Intent(MainActivity.this, PostViewActivity.class);
         intent.putExtra(PostConstants.ATTRIBUTES.ID, id);
         startActivity(intent);
+
     }
 
     @Override
     public void goToPostForm(Integer id) {
+
         Intent intent = new Intent(MainActivity.this, FormPostActivity.class);
         intent.putExtra(PostConstants.ATTRIBUTES.ID, id);
         startActivity(intent);
+
     }
 
     @Override
@@ -265,6 +277,31 @@ public class MainActivity extends AppCompatActivity
         if (manager != null)
             manager.notify(0, notification);
 
+    }
+
+   @Subscribe
+   public void onEvent(Boolean event) {
+        if (!event) {
+        new AlertDialog.Builder(this)
+                            .setTitle(R.string.ocorreu_um_erro)
+                            .setMessage(R.string.internet_indisponivel)
+                            .setCancelable(false)
+                            .setPositiveButton(
+                                    getString(R.string.sair),
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            finish();
+                                        }
+                                    })
+                            .show();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        eventBus.unregister(this);
+        super.onDestroy();
     }
 
     private static class ViewHolder {

@@ -36,5 +36,6 @@
     <string name="empty_post_content_description">Selecione um post para ser exibido neste espaço.</string>
     <string name="voltar">Voltar</string>
     <string name="notificacao_novo_post">Novo post</string>
+    <string name="sair">Sair</string>
 
 </resources>
